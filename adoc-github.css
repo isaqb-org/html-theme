@@ -352,6 +352,7 @@ div .details br {display: none}
 
 .tableblock > caption { text-align: left; font-weight: bold; white-space: nowrap; overflow: visible; max-width: 0; }
 
+table { width: 100% }
 table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p { font-size: inherit; }
 
 .admonitionblock > table { border: 0; background: none; width: 100%; }
