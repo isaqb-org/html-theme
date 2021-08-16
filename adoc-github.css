@@ -307,6 +307,8 @@ kbd kbd:last-child { margin-right: 0; }
 #header br + span.author { padding-left: 0; }
 #header br + span.author:before { content: ", "; }
 
+div .details br {display: none}
+
 #toc { border-bottom: 0 solid #dddddd; padding-bottom: 1.33333em; }
 #toc > ul { margin-left: 0.26667em; }
 #toc ul.sectlevel0 > li > a { font-style: italic; }
