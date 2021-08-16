@@ -302,7 +302,6 @@ kbd kbd:last-child { margin-right: 0; }
 #header > h1 { color: #263e4d; font-weight: 300; border-bottom: 1px solid #dddddd; margin-bottom: -28px; padding-bottom: 32px; }
 #header span { color: #777a7b; }
 #header #revnumber { text-transform: capitalize; }
-#header br { display: none; }
 #header br + span { padding-left: 3px; }
 #header br + span:before { content: "\2013 \0020"; }
 #header br + span.author { padding-left: 0; }
