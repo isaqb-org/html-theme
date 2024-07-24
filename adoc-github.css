@@ -901,7 +901,6 @@ div .details br {
 
 #content #toc {
   border-style: solid;
-  border-width: 1px;
   border-color: #e6e6e6;
   margin-bottom: 1.33333em;
   padding: 1.33333em;
@@ -1751,7 +1750,6 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] {
 
 .admonitionblock td.icon .icon-note:before {
   content: "\f05a";
-  color: #4183c4;
   color: #2e6295;
 }
 
