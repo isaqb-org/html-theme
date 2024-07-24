@@ -990,6 +990,10 @@ div .details br {
   font-weight: bold;
 }
 
+.admonitionblock td.content, .admonitionblock td.icon {
+  font-size: 1em;
+}
+
 .tableblock > caption {
   text-align: left;
   font-weight: bold;
