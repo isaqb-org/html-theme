@@ -321,11 +321,6 @@ a:focus:not(:focus-visible) {
   outline: none;
 }
 
-a:focus-visible {
-  outline: 2px solid var(--color-brand-orange);
-  outline-offset: 2px;
-}
-
 img, object, embed {
   max-width: 100%;
   height: auto;
@@ -1993,6 +1988,10 @@ h2 {
   #theme-toggle {
     transition: none;
   }
+
+  :target {
+    animation: none;
+  }
 }
 
 
@@ -2078,11 +2077,6 @@ h2 {
   transform: translateY(-1px);
 }
 
-#theme-toggle:focus-visible {
-  outline: 2px solid var(--color-brand-orange);
-  outline-offset: 2px;
-}
-
 @media print {
   #theme-toggle {
     display: none;
@@ -2102,5 +2096,50 @@ h2 {
   table.tableblock {
     display: block;
     overflow-x: auto;
+  }
+}
+
+/* === SECTION: ACCESSIBILITY === */
+
+/* Visible keyboard-focus ring on every interactive element (not just links). */
+:focus-visible {
+  outline: 2px solid var(--color-brand-orange);
+  outline-offset: 2px;
+}
+
+/* Flash the element you jumped to (TOC/anchor) so it's easy to locate. */
+:target {
+  scroll-margin-top: var(--space-6);
+  animation: target-flash 1.5s ease-out;
+}
+
+@keyframes target-flash {
+  from {
+    background-color: rgb(243 146 0 / 22%);
+  }
+
+  to {
+    background-color: transparent;
+  }
+}
+
+/* Stronger cues for readers who ask for more contrast: underline links (so
+   they don't rely on color alone) and darken hairlines. */
+@media (prefers-contrast: more) {
+  :root {
+    --color-border-light: #767676;
+    --color-border-lighter: #767676;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+}
+
+/* Windows High Contrast / forced-colors: the orange toggle drops its
+   background there, so give it a border to stay visible. */
+@media (forced-colors: active) {
+  #theme-toggle {
+    border: 1px solid;
   }
 }
