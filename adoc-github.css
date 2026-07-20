@@ -1,6 +1,8 @@
 /* ================================================================
-   SECTION: RESET (normalize.css v2.1.1)
-   See CSS-IMPROVEMENT-PLAN.md for the ongoing cleanup plan for this file.
+   SECTION: RESET — based on normalize.css v2.1.1, since patched
+   (dead IE-only rules removed, see CSS-IMPROVEMENT-PLAN.md step 7
+   for what changed and why). No longer a pristine, diffable copy
+   of the upstream file.
    ================================================================ */
 
 /* normalize.css v2.1.1 | MIT License | git.io/normalize */
@@ -259,6 +261,10 @@ table {
   --scale-120: 1.2em;                  /* ~18px — heading line-height, admonition padding */
   --scale-133: 1.3333em;               /* ~20px — dominant block-spacing unit */
   --scale-147: 1.4667em;               /* ~22px — inline-list spacing, procedure numeral size */
+
+  --shadow-sm: 0 1px 3px rgb(23 74 106 / 8%), 0 1px 2px rgb(23 74 106 / 6%); /* card elevation, navy-tinted */
+  --shadow-md: 0 6px 16px rgb(23 74 106 / 12%), 0 2px 4px rgb(23 74 106 / 7%); /* stronger elevation: fixed TOC, hover states */
+  --radius-md: 8px; /* card-level corner radius: example/sidebar/toc/images */
 }
 
 /* ================================================================
@@ -440,6 +446,11 @@ h2 {
 
 h3, #toctitle, .sidebarblock > .content > .title {
   font-size: 1.0em;
+}
+
+h3 {
+  padding-left: var(--scale-040);
+  border-left: 3px solid var(--color-brand-orange);
 }
 
 h4 {
@@ -753,6 +764,14 @@ table tr.even, table tr.alt, table tr:nth-of-type(even) {
   background: var(--color-table-stripe-bg);
 }
 
+table tbody tr {
+  transition: background-color 150ms ease;
+}
+
+table tbody tr:hover {
+  background: rgb(23 74 106 / 6%);
+}
+
 table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoot tr td {
   display: table-cell;
   line-height: 1.4;
@@ -970,7 +989,8 @@ div .details br {
   padding: var(--scale-133);
   background: white;
   border-width: 0;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
 }
 
 #content #toc > :first-child {
@@ -983,6 +1003,23 @@ div .details br {
 
 #content #toc a {
   text-decoration: none;
+}
+
+#toc a {
+  display: block;
+  border-radius: var(--radius-sm);
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+#toc a:hover, #toc a:focus-visible {
+  background: rgb(243 146 0 / 10%);
+  color: var(--color-brand-orange-hover);
+}
+
+#toc a.is-active {
+  color: var(--color-brand-orange);
+  font-weight: bold;
+  background: rgb(243 146 0 / 8%);
 }
 
 #content #toctitle {
@@ -1018,9 +1055,11 @@ div .details br {
   display: block;
   text-decoration: none;
   visibility: hidden;
+  opacity: 0;
   text-align: center;
   font-weight: normal;
   color: var(--color-brand-orange);
+  transition: opacity 150ms ease;
 }
 
 #content h1 > a.anchor::before, h2 > a.anchor::before, h3 > a.anchor::before, #toctitle > a.anchor::before, .sidebarblock > .content > .title > a.anchor::before, h4 > a.anchor::before, h5 > a.anchor::before, h6 > a.anchor::before {
@@ -1033,6 +1072,7 @@ div .details br {
 
 #content h1:hover > a.anchor, #content h1 > a.anchor:hover, h2:hover > a.anchor, h2 > a.anchor:hover, h3:hover > a.anchor, #toctitle:hover > a.anchor, .sidebarblock > .content > .title:hover > a.anchor, h3 > a.anchor:hover, #toctitle > a.anchor:hover, .sidebarblock > .content > .title > a.anchor:hover, h4:hover > a.anchor, h4 > a.anchor:hover, h5:hover > a.anchor, h5 > a.anchor:hover, h6:hover > a.anchor, h6 > a.anchor:hover {
   visibility: visible;
+  opacity: 1;
 }
 
 #content h1 > a.link, h2 > a.link, h3 > a.link, #toctitle > a.link, .sidebarblock > .content > .title > a.link, h4 > a.link, h5 > a.link, h6 > a.link {
@@ -1111,7 +1151,8 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
   margin-bottom: var(--scale-133);
   padding: var(--scale-133);
   background: white;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
 }
 
 .exampleblock > .content > :first-child {
@@ -1146,7 +1187,8 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
   margin-bottom: var(--scale-133);
   padding: var(--scale-133);
   background: white;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
 }
 
 .sidebarblock > :first-child {
@@ -1564,6 +1606,11 @@ td.hdlist1, td.hdlist2 {
   margin-bottom: 0;
 }
 
+.imageblock img {
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
 .imageblock.thumb, .imageblock.th {
   border-width: 6px;
 }
@@ -1946,5 +1993,18 @@ h2 {
   line-height: 1.6;
   text-align: right;
   border-right: 1px solid #ddd;
+}
+
+/* ================================================================
+   SECTION: MOTION PREFERENCES
+   Respect prefers-reduced-motion for the transitions added in this
+   redesign pass (TOC hover/active, table row hover, anchor fade-in).
+   ================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  #content h1 > a.anchor, h2 > a.anchor, h3 > a.anchor, #toctitle > a.anchor, .sidebarblock > .content > .title > a.anchor, h4 > a.anchor, h5 > a.anchor, h6 > a.anchor,
+  #toc a,
+  table tbody tr {
+    transition: none;
+  }
 }
 
