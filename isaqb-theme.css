@@ -60,11 +60,12 @@ audio:not([controls]) {
 
 /* ========================================================================== Base ========================================================================== */
 
-/** 1. Prevent system color scheme's background color being used in Firefox, IE, and Opera. 2. Prevent system color scheme's text color being used in Firefox, IE, and Opera. 3. Set default font family to sans-serif. 4. Prevent iOS text size adjust after orientation change, without disabling user zoom. */
+/** Base page background + text color. (normalize's default font-family:
+    sans-serif dropped — redundant now that `body` sets font-family: var(--font-sans)
+    and all content lives in body.) Both use tokens so dark mode flips them. */
 html {
-  background: var(--color-page-bg); /* 1 */
-  color: #000; /* 2 */
-  font-family: sans-serif; /* 3 */
+  background: var(--color-page-bg);
+  color: var(--color-body-navy);
 }
 
 /** Remove default margin. */
@@ -266,6 +267,7 @@ table {
   --color-page-bg: white;              /* html/body background */
   --color-surface: white;              /* cards: table, toc, example, sidebar */
   --color-surface-alt: whitesmoke;     /* footer background */
+  --color-row-hover: rgb(23 74 106 / 6%); /* table row hover tint (navy on light) */
 
   --font-sans: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
 
@@ -769,7 +771,7 @@ table tbody tr {
 }
 
 table tbody tr:hover {
-  background: rgb(23 74 106 / 6%);
+  background: var(--color-row-hover);
 }
 
 table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoot tr td {
@@ -2000,19 +2002,26 @@ h2 {
 
   #content h1 > a.anchor, h2 > a.anchor, h3 > a.anchor, #toctitle > a.anchor, .sidebarblock > .content > .title > a.anchor, h4 > a.anchor, h5 > a.anchor, h6 > a.anchor,
   #toc a,
-  table tbody tr {
+  table tbody tr,
+  #theme-toggle {
     transition: none;
   }
 }
 
 
 /* === SECTION: DARK MODE ===
-   Honors the OS/browser preference. Palette is a designed dark scheme, not an
-   inversion: CI brand orange stays the accent; navy family maps to dark
-   surfaces; text maps to light slate. Only the color tokens flip — layout,
-   type, and spacing are unchanged. */
+   A designed dark scheme, not an inversion: CI brand orange stays the accent;
+   navy family maps to dark surfaces; text maps to light slate. Only color
+   tokens flip — layout, type, spacing unchanged.
+
+   Two triggers:
+   - automatic: OS prefers dark, UNLESS the reader forced light via the toggle
+     (`:root[data-theme="light"]`), which just leaves the light base :root in place.
+   - manual: the toggle sets `:root[data-theme="dark"]`.
+   The two token blocks below are intentionally IDENTICAL — keep them in sync.
+   (data-theme is set by the toggle button injected in adoc-theme.js.) */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --color-heading-navy: #e8edf1;     /* headings → near-white */
     --color-body-navy: #c4ced6;        /* body text → light slate */
     --color-muted-gray: #9aa6af;       /* muted text a touch lighter */
@@ -2026,26 +2035,82 @@ h2 {
     --color-page-bg: #121b22;          /* page: deep navy, not black */
     --color-surface: #1a262e;          /* cards: slightly above page */
     --color-surface-alt: #202e38;      /* footer */
+    --color-row-hover: rgb(255 255 255 / 6%); /* row hover: light-on-dark */
     --shadow-sm: 0 1px 3px rgb(0 0 0 / 45%), 0 1px 2px rgb(0 0 0 / 35%);
     --shadow-md: 0 6px 16px rgb(0 0 0 / 50%), 0 2px 4px rgb(0 0 0 / 40%);
   }
+}
 
-  /* RESET set html color:#000 for light; make base text light so anything
-     not covered by body's color inherits correctly. */
-  html {
-    color: var(--color-body-navy);
-  }
+:root[data-theme="dark"] {
+  --color-heading-navy: #e8edf1;
+  --color-body-navy: #c4ced6;
+  --color-muted-gray: #9aa6af;
+  --color-text-muted: #aeb9c1;
+  --color-text-dark: #dbe2e8;
+  --color-border-light: #34434e;
+  --color-border-lighter: #2c3a44;
+  --color-table-head-bg: #0f1a22;
+  --color-table-stripe-bg: #1f2d37;
+  --color-shadow-soft: #26333d;
+  --color-page-bg: #121b22;
+  --color-surface: #1a262e;
+  --color-surface-alt: #202e38;
+  --color-row-hover: rgb(255 255 255 / 6%);
+  --shadow-sm: 0 1px 3px rgb(0 0 0 / 45%), 0 1px 2px rgb(0 0 0 / 35%);
+  --shadow-md: 0 6px 16px rgb(0 0 0 / 50%), 0 2px 4px rgb(0 0 0 / 40%);
+}
 
-  /* Row-hover tint was navy-on-white; needs light-on-dark to be visible. */
-  table tbody tr:hover {
-    background: rgb(255 255 255 / 6%);
-  }
-
-  /* The TIP admonition icon is drawn near-black (#111) — invisible on a dark
-     surface. Swap in a gold lightbulb (only this icon needs it; the others
-     are mid-tone and read fine on dark). */
-  .admonitionblock td.icon .icon-tip::before {
+/* The TIP admonition icon color is baked into its SVG data-URI (#111,
+   invisible on dark) — can't be a token flip, so it's overridden per trigger
+   with a gold lightbulb. The other 4 icons are mid-tone and read fine on dark. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .admonitionblock td.icon .icon-tip::before {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2.3v1h6v-1c0-1.1.4-1.8 1-2.3A7 7 0 0 0 12 2z' fill='%23f5d76e'/%3E%3Crect x='9' y='19' width='6' height='2' rx='1' fill='%23f5d76e'/%3E%3Crect x='10' y='22' width='4' height='1.5' rx='.75' fill='%23f5d76e'/%3E%3C/svg%3E");
+  }
+}
+
+:root[data-theme="dark"] .admonitionblock td.icon .icon-tip::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2.3v1h6v-1c0-1.1.4-1.8 1-2.3A7 7 0 0 0 12 2z' fill='%23f5d76e'/%3E%3Crect x='9' y='19' width='6' height='2' rx='1' fill='%23f5d76e'/%3E%3Crect x='10' y='22' width='4' height='1.5' rx='.75' fill='%23f5d76e'/%3E%3C/svg%3E");
+}
+
+/* === SECTION: THEME TOGGLE ===
+   Styling for the button adoc-theme.js injects. Fixed top-right, themed with
+   the same tokens so it flips with the rest. */
+#theme-toggle {
+  position: fixed;
+  top: var(--space-4);
+  right: var(--space-4);
+  z-index: 1100;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: var(--color-brand-orange);
+  color: #fff;
+  box-shadow: var(--shadow-md);
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 150ms ease, transform 150ms ease;
+}
+
+#theme-toggle:hover {
+  background: var(--color-brand-orange-hover);
+  transform: translateY(-1px);
+}
+
+#theme-toggle:focus-visible {
+  outline: 2px solid var(--color-brand-orange);
+  outline-offset: 2px;
+}
+
+@media print {
+  #theme-toggle {
+    display: none;
   }
 }
 
