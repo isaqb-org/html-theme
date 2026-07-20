@@ -281,6 +281,7 @@ table {
   --space-4: 1rem;       /* 16px */
   --space-5: 1.5rem;     /* 24px */
   --space-6: 2rem;       /* 32px */
+  --space-7: 3rem;       /* 48px */
 
   --radius-sm: 3px;
   --radius-md: 8px;
@@ -444,8 +445,8 @@ h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 {
   font-style: normal;
   color: var(--color-heading-navy);
   text-rendering: optimizelegibility;
-  margin-top: var(--space-1);
-  margin-bottom: var(--space-2);
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-3);
   line-height: 1.2;
 }
 
@@ -461,6 +462,7 @@ h1 {
 
 h2 {
   font-size: var(--text-2xl);
+  margin-top: var(--space-7);
 }
 
 h3, #toctitle, .sidebarblock > .content > .title {
@@ -474,6 +476,7 @@ h3 {
 
 h4 {
   font-size: var(--text-lg);
+  margin-top: var(--space-5);
 }
 
 h5 {
