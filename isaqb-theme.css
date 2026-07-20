@@ -1,9 +1,37 @@
-/* ================================================================
-   SECTION: RESET — based on normalize.css v2.1.1, since patched
-   (dead IE-only rules removed, see CSS-IMPROVEMENT-PLAN.md step 7
-   for what changed and why). No longer a pristine, diffable copy
-   of the upstream file.
-   ================================================================ */
+/* === SECTION: FONTS === */
+@font-face {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../html-theme/fonts/roboto-normal.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: Roboto;
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../html-theme/fonts/roboto-italic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../html-theme/fonts/roboto-bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: Roboto;
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../html-theme/fonts/roboto-bold_italic.ttf') format('truetype');
+}
+
+/* === SECTION: RESET — based on normalize.css v2.1.1, since patched === */
 
 /* normalize.css v2.1.1 | MIT License | git.io/normalize */
 
@@ -216,66 +244,58 @@ table {
   border-spacing: 0;
 }
 
-/* ================================================================
-   SECTION: TOKENS
-   CI colors — values must not change, only how they're referenced.
-   Only colors that repeat >=2x with one consistent semantic role are
-   tokenized here. Left alone on purpose: the one-off Foundation
-   "rainbow" utility classes (.aqua, .navy, .maroon, ...) further down.
-
-   The --scale-* values below are this file's original em-based
-   modular scale (Foundation 3, 15px root — see html,body font-size
-   further down). Kept as em, not rem, on purpose: several of them size
-   margins/line-height relative to their own element's font-size (e.g.
-   heading margins inside .exampleblock/.sidebarblock), and rem would
-   flatten that relationship. Only values reused >=2x outside the
-   RESET section were extracted; single-use magic numbers and a
-   handful of shorthand-embedded values (documented in
-   CSS-IMPROVEMENT-PLAN.md, step 3) were left as literals — no reuse
-   benefit from tokenizing a number used exactly once.
-   ================================================================ */
+/* === SECTION: TOKENS ===
+   CI colors are fixed — change how they're referenced, never the value.
+   Type = modular scale (--text-*), spacing = 4px grid (--space-*). === */
 :root {
   --color-brand-orange: #f39200;       /* link color, anchor icon */
   --color-brand-orange-hover: #fe670a; /* link hover/focus */
   --color-heading-navy: #263e4d;       /* headings, header h1, anchor .link */
-  --color-body-navy: #174a6a;          /* body text, footer text, table cell text */
-  --color-muted-gray: #777a7b;         /* subheader/title text, toc title, blockquote cite */
-  --color-border-light: #ddd;       /* hairline borders throughout */
-  --color-border-lighter: #e6e6e6;     /* toc/example/sidebar block borders */
-  --color-text-dark: #333;          /* pre bg, block content headings, conum bg */
-  --color-text-muted: #666;         /* code color, blockquote/admonition text */
-  --color-icon-muted: #999;            /* line numbers, lang labels, procedure numerals */
-  --color-table-head-bg: #1D313E;      /* table thead/tfoot background */
-  --color-table-stripe-bg: #f0f4f8;    /* table even-row background */
-  --color-shadow-soft: #eaeaea;        /* soft box-shadow / bg tint */
-  --color-danger-red: #bf0000;         /* .red utility + icon-important (coincidentally shared) */
-  --radius-sm: 3px;                    /* small block/code corner radius */
-  --scale-020: 0.2em;                  /* ~3px  — heading top-margin, hover-label offsets */
-  --scale-027: 0.2667em;               /* ~4px  — toc indent, image spacing */
-  --scale-040: 0.4em;                  /* ~6px  — hover-label position offsets */
-  --scale-050: 0.5em;                  /* ~7.5px — paragraph/list spacing */
-  --scale-067: 0.6667em;               /* ~10px — dominant half-step: block spacing, h5 size */
-  --scale-070: 0.7em;                  /* ~10.5px — list left-margin (near-dupe of 067, kept as-is) */
-  --scale-087: 0.8667em;               /* ~13px — small text: code, blockquote cite */
-  --scale-093: 0.9333em;               /* ~14px — small text: asides, table cell headers */
-  --scale-120: 1.2em;                  /* ~18px — heading line-height, admonition padding */
-  --scale-133: 1.3333em;               /* ~20px — dominant block-spacing unit */
-  --scale-147: 1.4667em;               /* ~22px — inline-list spacing, procedure numeral size */
+  --color-body-navy: #174a6a;          /* body text, footer, table cell text */
+  --color-muted-gray: #777a7b;         /* subheader/title text, toc title, cite */
+  --color-border-light: #ddd;          /* hairline borders */
+  --color-border-lighter: #e6e6e6;     /* card borders */
+  --color-text-dark: #333;             /* block content headings, conum bg */
+  --color-text-muted: #666;            /* code, blockquote/admonition text */
+  --color-icon-muted: #999;            /* line numbers, procedure numerals */
+  --color-table-head-bg: #1D313E;      /* table thead/tfoot */
+  --color-table-stripe-bg: #f0f4f8;    /* table even-row */
+  --color-shadow-soft: #eaeaea;        /* soft bg tint */
+  --color-danger-red: #bf0000;         /* .red utility + icon-important */
 
-  --shadow-sm: 0 1px 3px rgb(23 74 106 / 8%), 0 1px 2px rgb(23 74 106 / 6%); /* card elevation, navy-tinted */
-  --shadow-md: 0 6px 16px rgb(23 74 106 / 12%), 0 2px 4px rgb(23 74 106 / 7%); /* stronger elevation: fixed TOC, hover states */
-  --radius-md: 8px; /* card-level corner radius: example/sidebar/toc/images */
+  --font-sans: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* Type scale — modular, 16px base */
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.875rem;   /* 14px */
+  --text-base: 1rem;     /* 16px */
+  --text-lg: 1.25rem;    /* 20px */
+  --text-xl: 1.5rem;     /* 24px */
+  --text-2xl: 1.875rem;  /* 30px */
+  --text-3xl: 2.25rem;   /* 36px */
+
+  /* Spacing — 4px grid */
+  --space-1: 0.25rem;    /* 4px */
+  --space-2: 0.5rem;     /* 8px */
+  --space-3: 0.75rem;    /* 12px */
+  --space-4: 1rem;       /* 16px */
+  --space-5: 1.5rem;     /* 24px */
+  --space-6: 2rem;       /* 32px */
+
+  --radius-sm: 3px;
+  --radius-md: 8px;
+  --shadow-sm: 0 1px 3px rgb(23 74 106 / 8%), 0 1px 2px rgb(23 74 106 / 6%);
+  --shadow-md: 0 6px 16px rgb(23 74 106 / 12%), 0 2px 4px rgb(23 74 106 / 7%);
 }
 
-/* ================================================================
-   SECTION: BASE RESET & LAYOUT UTILITIES
-   ================================================================ */
+/* === SECTION: BASE RESET & LAYOUT UTILITIES === */
 *, *::before, *::after {
   box-sizing: border-box;
 }
 
-html, body {
-  font-size: 15px;
+html {
+  font-size: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -283,7 +303,7 @@ body {
   color: var(--color-body-navy);
   padding: 0;
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans);
   font-weight: normal;
   font-style: normal;
   line-height: 1;
@@ -363,9 +383,7 @@ select {
   width: 100%;
 }
 
-/* ================================================================
-   SECTION: TYPOGRAPHY
-   ================================================================ */
+/* === SECTION: TYPOGRAPHY === */
 p.lead, .paragraph.lead > p, #preamble > .sectionbody > .paragraph:first-of-type p {
   font-size: 1em;
   line-height: 1.6;
@@ -376,8 +394,8 @@ p.lead, .paragraph.lead > p, #preamble > .sectionbody > .paragraph:first-of-type
   line-height: 1.4;
   color: var(--color-muted-gray);
   font-weight: 300;
-  margin-top: var(--scale-020);
-  margin-bottom: var(--scale-050);
+  margin-top: var(--space-1);
+  margin-bottom: var(--space-2);
 }
 
 /* Typography resets */
@@ -404,7 +422,7 @@ a img {
 
 /* Default paragraph styles */
 p {
-  font-family: helvetica, arial, freesans, clean, sans-serif;
+  font-family: var(--font-sans);
   font-weight: normal;
   font-size: 1em;
   line-height: 1.4;
@@ -413,21 +431,22 @@ p {
 }
 
 p aside {
-  font-size: var(--scale-093);
+  font-size: var(--text-sm);
   line-height: 1.35;
   font-style: italic;
 }
 
 /* Default header styles */
 h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 {
-  font-family: Roboto, helvetica, arial, freesans, clean, sans-serif;
+  scroll-margin-top: var(--space-6);
+  font-family: var(--font-sans);
   font-weight: bold;
   font-style: normal;
   color: var(--color-heading-navy);
   text-rendering: optimizelegibility;
-  margin-top: var(--scale-020);
-  margin-bottom: var(--scale-050);
-  line-height: var(--scale-120);
+  margin-top: var(--space-1);
+  margin-bottom: var(--space-2);
+  line-height: 1.2;
 }
 
 h1 small, h2 small, h3 small, #toctitle small, .sidebarblock > .content > .title small, h4 small, h5 small, h6 small {
@@ -437,39 +456,39 @@ h1 small, h2 small, h3 small, #toctitle small, .sidebarblock > .content > .title
 }
 
 h1 {
-  font-size: 2.33333em;
+  font-size: var(--text-3xl);
 }
 
 h2 {
-  font-size: var(--scale-133);
+  font-size: var(--text-2xl);
 }
 
 h3, #toctitle, .sidebarblock > .content > .title {
-  font-size: 1.0em;
+  font-size: var(--text-xl);
 }
 
 h3 {
-  padding-left: var(--scale-040);
+  padding-left: var(--space-2);
   border-left: 3px solid var(--color-brand-orange);
 }
 
 h4 {
-  font-size: var(--scale-087);
+  font-size: var(--text-lg);
 }
 
 h5 {
-  font-size: var(--scale-067);
+  font-size: var(--text-base);
 }
 
 h6 {
-  font-size: 1em;
+  font-size: var(--text-base);
 }
 
 hr {
   border: solid var(--color-border-light);
   border-width: 1px 0 0;
   clear: both;
-  margin: var(--scale-133) 0 1.26667em;
+  margin: var(--space-5) 0 1.26667em;
   height: 0;
 }
 
@@ -501,16 +520,16 @@ ul, ol, dl {
   line-height: 1.4;
   margin-bottom: 1em;
   list-style-position: outside;
-  font-family: Roboto, helvetica, arial, freesans, clean, sans-serif;
+  font-family: var(--font-sans);
 }
 
 ul, ol {
-  margin-left: var(--scale-070);
+  margin-left: var(--space-3);
 }
 
 /* Unordered Lists */
 ul li ul, ul li ol {
-  margin-left: var(--scale-133);
+  margin-left: var(--space-5);
   margin-bottom: 0;
   font-size: 1em; /* Override nested font-size change */
 }
@@ -537,7 +556,7 @@ ul.no-bullet {
 
 /* Ordered Lists */
 ol li ul, ol li ol {
-  margin-left: var(--scale-133);
+  margin-left: var(--space-5);
   margin-bottom: 0;
 }
 
@@ -548,7 +567,7 @@ dl dt {
 }
 
 dl dd {
-  margin-bottom: var(--scale-133);
+  margin-bottom: var(--space-5);
 }
 
 /* Abbreviations */
@@ -573,7 +592,7 @@ blockquote {
 
 blockquote cite {
   display: block;
-  font-size: var(--scale-087);
+  font-size: var(--text-sm);
   color: var(--color-muted-gray);
 }
 
@@ -593,9 +612,9 @@ blockquote, blockquote p {
 /* Microformats */
 .vcard {
   display: inline-block;
-  margin: 0 0 var(--scale-133) 0;
+  margin: 0 0 var(--space-5) 0;
   border: 1px solid var(--color-border-light);
-  padding: var(--scale-067) 0.8em;
+  padding: var(--space-3) 0.8em;
 }
 
 .vcard li {
@@ -620,38 +639,7 @@ blockquote, blockquote p {
   padding: 0 0.06667em;
 }
 
-/* ================================================================
-   SECTION: RESPONSIVE TYPE SCALE
-   ================================================================ */
-@media only screen and (min-width: 768px) {
-  h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 {
-    line-height: 1.4;
-  }
-
-  h1 {
-    font-size: 2.2em;
-  }
-
-  h2 {
-    font-size: 2em;
-  }
-
-  h3, #toctitle, .sidebarblock > .content > .title {
-    font-size: 1.6em;
-  }
-
-  h4 {
-    font-size: var(--scale-120);
-  }
-
-  h5 {
-    font-size: 1.0em
-  }
-}
-
-/* ================================================================
-   SECTION: PRINT
-   ================================================================ */
+/* === SECTION: PRINT === */
 
 /* Print styles.  Inlined to avoid required HTTP connection: www.phpied.com/delay-loading-your-print-css/ Credit to Paul Irish and HTML5 Boilerplate (html5boilerplate.com)
 */
@@ -730,14 +718,12 @@ blockquote, blockquote p {
   }
 }
 
-/* ================================================================
-   SECTION: BASE TABLES
-   ================================================================ */
+/* === SECTION: BASE TABLES === */
 
 /* Tables */
 table {
   background: white;
-  margin-bottom: var(--scale-133);
+  margin-bottom: var(--space-5);
   border: solid 1px var(--color-border-light);
 }
 
@@ -748,14 +734,14 @@ table thead, table tfoot {
 }
 
 table thead tr th, table thead tr td, table tfoot tr th, table tfoot tr td {
-  padding: 0.53333em var(--scale-067) var(--scale-067);
-  font-size: var(--scale-093);
+  padding: 0.53333em var(--space-3) var(--space-3);
+  font-size: var(--text-sm);
   color: white;
   text-align: left;
 }
 
 table tr th, table tr td {
-  padding: 0.6em var(--scale-067);
+  padding: 0.6em var(--space-3);
   font-size: 0.8em;
   color: var(--color-body-navy);
 }
@@ -777,12 +763,7 @@ table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoo
   line-height: 1.4;
 }
 
-/* ================================================================
-   SECTION: ASCIIDOC COMPONENTS
-   (code/kbd, page layout, toc, footer, admonition/example/sidebar/
-   listing/quote blocks, table variants, hdlist/colist, images,
-   footnotes, gist, print-break helpers)
-   ================================================================ */
+/* === SECTION: ASCIIDOC COMPONENTS === */
 a:hover, a:focus {
   text-decoration: underline;
 }
@@ -797,7 +778,7 @@ a:hover, a:focus {
 }
 
 *:not(pre) > code {
-  font-size: var(--scale-087);
+  font-size: var(--text-sm);
   padding: 1px 5px;
   white-space: nowrap;
   background-color: transparent;
@@ -827,7 +808,7 @@ kbd:not(.keyseq) {
   border-radius: var(--radius-sm);
   box-shadow: 0 1px 0 rgb(0 0 0 / 20%), 0 0 0 2px white inset;
   margin: -0.15em 0.15em 0;
-  padding: var(--scale-020) 0.6em var(--scale-020) 0.5em;
+  padding: var(--space-1) 0.6em var(--space-1) 0.5em;
   vertical-align: middle;
   white-space: nowrap;
 }
@@ -907,11 +888,11 @@ div .details br {
 
 #toc {
   border-bottom: 0 solid var(--color-border-light);
-  padding-bottom: var(--scale-133);
+  padding-bottom: var(--space-5);
 }
 
 #toc > ul {
-  margin-left: var(--scale-027);
+  margin-left: var(--space-1);
 }
 
 #toc ul.sectlevel0 > li > a {
@@ -920,8 +901,8 @@ div .details br {
 
 #toc ul.sectlevel0 ul.sectlevel1 {
   margin-left: 0;
-  margin-top: var(--scale-050);
-  margin-bottom: var(--scale-050);
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-2);
 }
 
 #toc ul {
@@ -960,13 +941,13 @@ div .details br {
 
   #toc.toc2 ul ul {
     margin-left: 0;
-    padding-left: var(--scale-133);
+    padding-left: var(--space-5);
   }
 
   #toc.toc2 ul.sectlevel0 ul.sectlevel1 {
     padding-left: 0;
-    margin-top: var(--scale-050);
-    margin-bottom: var(--scale-050);
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-2);
   }
 
   body.toc2.toc-right {
@@ -985,8 +966,8 @@ div .details br {
 #content #toc {
   border-style: solid;
   border-color: var(--color-border-lighter);
-  margin-bottom: var(--scale-133);
-  padding: var(--scale-133);
+  margin-bottom: var(--space-5);
+  padding: var(--space-5);
   background: white;
   border-width: 0;
   border-radius: var(--radius-md);
@@ -1024,7 +1005,7 @@ div .details br {
 
 #content #toctitle {
   font-weight: bold;
-  font-family: Roboto, helvetica, arial, freesans, clean, sans-serif;
+  font-family: var(--font-sans);
   font-size: 1.06667em;
   padding-left: 0.13333em;
 }
@@ -1032,7 +1013,7 @@ div .details br {
 #footer {
   max-width: 100%;
   background-color: whitesmoke;
-  padding: var(--scale-133);
+  padding: var(--space-5);
 }
 
 #footer-text {
@@ -1041,7 +1022,7 @@ div .details br {
 }
 
 .sect1 {
-  padding-bottom: var(--scale-133);
+  padding-bottom: var(--space-5);
 }
 
 .sect1 + .sect1 {
@@ -1085,7 +1066,7 @@ div .details br {
 }
 
 .imageblock, .literalblock, .listingblock, .verseblock, .videoblock {
-  margin-bottom: var(--scale-133);
+  margin-bottom: var(--space-5);
 }
 
 .admonitionblock td.content > .title, .exampleblock > .title, .imageblock > .title, .videoblock > .title, .listingblock > .title, .literalblock > .title, .openblock > .title, .paragraph > .title, .quoteblock > .title, .sidebarblock > .title, .tableblock > .title, .verseblock > .title, .dlist > .title, .olist > .title, .ulist > .title, .qlist > .title, .hdlist > .title {
@@ -1134,8 +1115,8 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 }
 
 .admonitionblock > table td.content {
-  padding-left: var(--scale-120);
-  padding-right: var(--scale-133);
+  padding-left: var(--space-4);
+  padding-right: var(--space-5);
   border-left: 1px solid var(--color-border-light);
   color: var(--color-text-muted);
 }
@@ -1148,8 +1129,8 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
   border-style: solid;
   border-width: 1px;
   border-color: var(--color-border-lighter);
-  margin-bottom: var(--scale-133);
-  padding: var(--scale-133);
+  margin-bottom: var(--space-5);
+  padding: var(--space-5);
   background: white;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
@@ -1169,7 +1150,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 
 .exampleblock > .content h1, .exampleblock > .content h2, .exampleblock > .content h3, .exampleblock > .content #toctitle, .sidebarblock.exampleblock > .content > .title, .exampleblock > .content h4, .exampleblock > .content h5, .exampleblock > .content h6 {
   line-height: 1;
-  margin-bottom: var(--scale-067);
+  margin-bottom: var(--space-3);
 }
 
 .exampleblock > .content h1.subheader, .exampleblock > .content h2.subheader, .exampleblock > .content h3.subheader, .exampleblock > .content .subheader#toctitle, .sidebarblock.exampleblock > .content > .subheader.title, .exampleblock > .content h4.subheader, .exampleblock > .content h5.subheader, .exampleblock > .content h6.subheader {
@@ -1184,8 +1165,8 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
   border-style: solid;
   border-width: 1px;
   border-color: var(--color-border-lighter);
-  margin-bottom: var(--scale-133);
-  padding: var(--scale-133);
+  margin-bottom: var(--space-5);
+  padding: var(--space-5);
   background: white;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
@@ -1205,7 +1186,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 
 .sidebarblock h1, .sidebarblock h2, .sidebarblock h3, .sidebarblock #toctitle, .sidebarblock > .content > .title, .sidebarblock h4, .sidebarblock h5, .sidebarblock h6 {
   line-height: 1;
-  margin-bottom: var(--scale-067);
+  margin-bottom: var(--space-3);
 }
 
 .sidebarblock h1.subheader, .sidebarblock h2.subheader, .sidebarblock h3.subheader, .sidebarblock .subheader#toctitle, .sidebarblock > .content > .subheader.title, .sidebarblock h4.subheader, .sidebarblock h5.subheader, .sidebarblock h6.subheader {
@@ -1234,7 +1215,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
   border-style: solid;
   border-color: var(--color-border-light);
   border-radius: var(--radius-sm);
-  padding: var(--scale-067);
+  padding: var(--space-3);
   word-wrap: break-word;
 }
 
@@ -1262,7 +1243,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 
 @media only screen and (min-width: 1280px) {
   .literalblock > .content pre, .listingblock > .content pre {
-    font-size: var(--scale-087);
+    font-size: var(--text-sm);
   }
 }
 
@@ -1275,8 +1256,8 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
   font-size: 0.9em;
   color: var(--color-icon-muted);
   position: absolute;
-  top: var(--scale-040);
-  right: var(--scale-040);
+  top: var(--space-2);
+  right: var(--space-2);
 }
 
 .listingblock:hover code.asciidoc::before {
@@ -1329,7 +1310,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 
 .listingblock.terminal pre .command::before {
   content: attr(data-prompt);
-  padding-right: var(--scale-050);
+  padding-right: var(--space-2);
   color: var(--color-icon-muted);
 }
 
@@ -1356,7 +1337,7 @@ table.pyhltable td.code {
 .highlight.pygments .lineno, table.pyhltable td:not(.code) {
   color: var(--color-icon-muted);
   padding-left: 0;
-  padding-right: var(--scale-050);
+  padding-right: var(--space-2);
   border-right: 1px solid var(--color-border-light);
 }
 
@@ -1378,9 +1359,9 @@ table.pyhltable .linenodiv {
 
 .quoteblock blockquote {
   margin: 0 0 1em;
-  padding: 0 0 0.6em 1em;
+  padding: var(--space-2) 0 var(--space-2) var(--space-4);
   border: 0;
-  background: url('../html-theme/images/github/blockquote-arrow.png') 0 2px no-repeat;
+  border-left: 4px solid var(--color-brand-orange);
 }
 
 .quoteblock blockquote > .paragraph:last-child p {
@@ -1390,7 +1371,7 @@ table.pyhltable .linenodiv {
 .quoteblock .attribution {
   margin-top: -.25em;
   padding-bottom: 0.6em;
-  font-size: var(--scale-087);
+  font-size: var(--text-sm);
   color: var(--color-text-muted);
 }
 
@@ -1400,7 +1381,7 @@ table.pyhltable .linenodiv {
 
 .quoteblock .attribution cite {
   display: block;
-  margin-bottom: var(--scale-067);
+  margin-bottom: var(--space-3);
 }
 
 table thead th, table tfoot th {
@@ -1467,7 +1448,7 @@ ol {
 }
 
 ul li ol {
-  margin-left: var(--scale-070);
+  margin-left: var(--space-3);
 }
 
 dl dd {
@@ -1479,7 +1460,7 @@ dl dd:last-child, dl dd:last-child > :last-child {
 }
 
 ol > li p, ul > li p, ul dd, ol dd, .olist .olist, .ulist .ulist, .ulist .olist, .olist .ulist {
-  margin-bottom: var(--scale-050);
+  margin-bottom: var(--space-2);
 }
 
 ul.unstyled, ol.unnumbered, ul.checklist, ul.none {
@@ -1487,7 +1468,7 @@ ul.unstyled, ol.unnumbered, ul.checklist, ul.none {
 }
 
 ul.unstyled, ol.unnumbered, ul.checklist {
-  margin-left: var(--scale-067);
+  margin-left: var(--space-3);
 }
 
 ul.checklist li > p:first-child > i[class^="icon-check"]:first-child, ul.checklist li > p:first-child > input[type="checkbox"]:first-child {
@@ -1500,8 +1481,8 @@ ul.checklist li > p:first-child > input[type="checkbox"]:first-child {
 }
 
 ul.inline {
-  margin: 0 auto var(--scale-050) auto;
-  margin-left: calc(-1 * var(--scale-147));
+  margin: 0 auto var(--space-2) auto;
+  margin-left: calc(-1 * var(--space-5));
   margin-right: 0;
   padding: 0;
   list-style: none;
@@ -1511,7 +1492,7 @@ ul.inline {
 ul.inline > li {
   list-style: none;
   float: left;
-  margin-left: var(--scale-147);
+  margin-left: var(--space-5);
   display: block;
 }
 
@@ -1571,7 +1552,7 @@ td.hdlist1, td.hdlist2 {
 }
 
 .literalblock + .colist, .listingblock + .colist {
-  margin-top: calc(-1 * var(--scale-050));
+  margin-top: calc(-1 * var(--space-2));
 }
 
 .colist > table tr > td:first-of-type {
@@ -1580,7 +1561,7 @@ td.hdlist1, td.hdlist2 {
 }
 
 .colist > table tr > td:last-of-type {
-  padding: var(--scale-027) 0;
+  padding: var(--space-1) 0;
 }
 
 .qanda > ol > li > p > em:only-child {
@@ -1595,11 +1576,11 @@ td.hdlist1, td.hdlist2 {
 }
 
 .imageblock.left, .imageblock[style*="float: left"] {
-  margin: var(--scale-027) var(--scale-067) var(--scale-133) 0;
+  margin: var(--space-1) var(--space-3) var(--space-5) 0;
 }
 
 .imageblock.right, .imageblock[style*="float: right"] {
-  margin: var(--scale-027) 0 var(--scale-133) var(--scale-067);
+  margin: var(--space-1) 0 var(--space-5) var(--space-3);
 }
 
 .imageblock > .title {
@@ -1620,18 +1601,18 @@ td.hdlist1, td.hdlist2 {
 }
 
 .image.left, .image.right {
-  margin-top: var(--scale-027);
-  margin-bottom: var(--scale-027);
+  margin-top: var(--space-1);
+  margin-bottom: var(--space-1);
   display: inline-block;
   line-height: 0;
 }
 
 .image.left {
-  margin-right: var(--scale-067);
+  margin-right: var(--space-3);
 }
 
 .image.right {
-  margin-left: var(--scale-067);
+  margin-left: var(--space-3);
 }
 
 a.image {
@@ -1640,7 +1621,7 @@ a.image {
 
 span.footnote, span.footnoteref {
   vertical-align: super;
-  font-size: var(--scale-093);
+  font-size: var(--text-sm);
 }
 
 span.footnote a, span.footnoteref a {
@@ -1650,7 +1631,7 @@ span.footnote a, span.footnoteref a {
 #footnotes {
   padding-top: 0.8em;
   padding-bottom: 0.8em;
-  margin-bottom: var(--scale-067);
+  margin-bottom: var(--space-3);
 }
 
 #footnotes hr {
@@ -1661,12 +1642,12 @@ span.footnote a, span.footnoteref a {
 }
 
 #footnotes .footnote {
-  padding: 0 var(--scale-040);
+  padding: 0 var(--space-2);
   line-height: 1.3;
-  font-size: var(--scale-093);
-  margin-left: var(--scale-120);
-  text-indent: calc(-1 * var(--scale-120));
-  margin-bottom: var(--scale-020);
+  font-size: var(--text-sm);
+  margin-left: var(--space-4);
+  text-indent: calc(-1 * var(--space-4));
+  margin-bottom: var(--space-1);
 }
 
 #footnotes .footnote a:first-of-type {
@@ -1679,7 +1660,7 @@ span.footnote a, span.footnoteref a {
 }
 
 #content #footnotes {
-  margin-top: calc(-1 * var(--scale-067));
+  margin-top: calc(-1 * var(--space-3));
   margin-bottom: 0;
   padding: 0.8em 0;
 }
@@ -1699,13 +1680,7 @@ div.unbreakable {
   page-break-inside: avoid;
 }
 
-/* ================================================================
-   SECTION: COLOR & TEXT UTILITIES
-   The .{color}/.{color}-background classes below are Foundation's
-   stock 16-swatch set, each used once — candidates for a usage audit
-   and possible removal (see CSS-IMPROVEMENT-PLAN.md, step 9). Left
-   as raw hex on purpose: no reuse benefit from tokenizing one-offs.
-   ================================================================ */
+/* === SECTION: COLOR & TEXT UTILITIES === */
 .big {
   font-size: larger;
 }
@@ -1854,17 +1829,7 @@ div.unbreakable {
   background-color: #fafa00;
 }
 
-/* ================================================================
-   SECTION: ICONS & ADMONITION GLYPHS
-   Admonition icons are inline SVG background-images (colors baked in,
-   matching the exact values previously used for the FontAwesome glyph
-   `color`) instead of hardcoded FontAwesome 3/4 codepoints — no external
-   icon font dependency for these 5. The generic `span.icon` rule right
-   below still assumes an external icon font is loaded elsewhere: that's
-   an AsciiDoc content-authoring feature (icon:name[] can reference any
-   icon in that font), not something this file can replace without
-   knowing every icon name a document might use.
-   ================================================================ */
+/* === SECTION: ICONS & ADMONITION GLYPHS === */
 span.icon > [class^="icon-"], span.icon > [class*=" icon-"] {
   cursor: default;
 }
@@ -1936,16 +1901,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] {
   display: none;
 }
 
-/* ================================================================
-   SECTION: ISAQB SITE OVERRIDES
-   Tail appended over the stock github/asciidoctor theme above. The
-   four rules that used to duplicate/conflict with earlier definitions
-   in this file (p.lead, the h1-h6 anchor color, .quoteblock blockquote,
-   .sidebarblock > .content > .title — see CSS-IMPROVEMENT-PLAN.md,
-   step 4) have been merged into their upstream rule and removed from
-   here. What's left below are genuinely isaqb-specific additions with
-   no earlier counterpart.
-   ================================================================ */
+/* === SECTION: ISAQB SITE OVERRIDES === */
 h2 {
   color: var(--color-heading-navy);
   border-bottom: 1px solid var(--color-border-light);
@@ -1962,8 +1918,21 @@ h2 {
 }
 
 #content ul li {
-  background: url('../html-theme/images/isaqb/li-chevron.png') 0 var(--scale-040) no-repeat;
-  padding-left: var(--scale-070);
+  position: relative;
+  padding-left: var(--space-4);
+}
+
+/* Crisp CSS bullet — small CI-orange square, rounded to match the card
+   radius language. Replaces the old raster chevron PNG (blurry on HiDPI). */
+#content ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 6px;
+  height: 6px;
+  background: var(--color-brand-orange);
+  border-radius: 1px;
 }
 
 .olist.procedure > ol {
@@ -1988,19 +1957,19 @@ h2 {
   width: 30px;
   padding: 0 10px 0 0;
   color: var(--color-icon-muted);
-  font-size: var(--scale-147);
+  font-size: var(--text-xl);
   font-weight: bold;
   line-height: 1.6;
   text-align: right;
   border-right: 1px solid #ddd;
 }
 
-/* ================================================================
-   SECTION: MOTION PREFERENCES
-   Respect prefers-reduced-motion for the transitions added in this
-   redesign pass (TOC hover/active, table row hover, anchor fade-in).
-   ================================================================ */
+/* === SECTION: MOTION PREFERENCES === */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   #content h1 > a.anchor, h2 > a.anchor, h3 > a.anchor, #toctitle > a.anchor, .sidebarblock > .content > .title > a.anchor, h4 > a.anchor, h5 > a.anchor, h6 > a.anchor,
   #toc a,
   table tbody tr {
