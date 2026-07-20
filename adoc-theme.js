@@ -1,63 +1,50 @@
-// TOC scroll-spy: toggles .is-active on the link for the section in view.
 (function () {
   const toc = document.getElementById("toc");
-  if (!toc) {
+  if (!toc || typeof IntersectionObserver === "undefined") {
     return;
   }
 
-  const byId = {};
-  Array.prototype.slice
-    .call(toc.querySelectorAll('a[href^="#"]'))
-    .forEach((link) => {
-      const heading = document.getElementById(
-        link.getAttribute("href").slice(1),
-      );
-      if (heading) {
-        byId[heading.id] = link;
-      }
-    });
-
-  const headings = Object.keys(byId).map((id) => {
-    return document.getElementById(id);
-  });
-  if (!headings.length || typeof IntersectionObserver === "undefined") {
+  const linkFor = new Map();
+  for (const link of toc.querySelectorAll('a[href^="#"]')) {
+    const heading = document.getElementById(link.getAttribute("href").slice(1));
+    if (heading) {
+      linkFor.set(heading, link);
+    }
+  }
+  if (linkFor.size === 0) {
     return;
   }
 
-  let activeId = null;
+  let active = null;
   const observer = new IntersectionObserver(
     (entries) => {
-      const visible = entries.filter((e) => {
-        return e.isIntersecting;
-      });
-      if (!visible.length) {
+      let top = null;
+      for (const entry of entries) {
+        if (
+          entry.isIntersecting &&
+          (top === null ||
+            entry.boundingClientRect.top < top.boundingClientRect.top)
+        ) {
+          top = entry;
+        }
+      }
+      if (!top || top.target === active) {
         return;
       }
-      visible.sort((a, b) => {
-        return a.boundingClientRect.top - b.boundingClientRect.top;
-      });
-      const id = visible[0].target.id;
-      if (id === activeId) {
-        return;
+      if (active) {
+        linkFor.get(active).classList.remove("is-active");
       }
-      if (activeId && byId[activeId]) {
-        byId[activeId].classList.remove("is-active");
-      }
-      if (byId[id]) {
-        byId[id].classList.add("is-active");
-      }
-      activeId = id;
+      linkFor.get(top.target).classList.add("is-active");
+      active = top.target;
     },
     { rootMargin: "0px 0px -70% 0px", threshold: 0 },
   );
 
-  headings.forEach((heading) => {
+  for (const heading of linkFor.keys()) {
     observer.observe(heading);
-  });
+  }
 })();
 
-// Light/dark toggle: no saved choice follows the OS; click sets and persists
-// an explicit data-theme on <html>. Button styled as #theme-toggle.
 (function () {
   const root = document.documentElement;
   const KEY = "isaqb-theme";
@@ -72,15 +59,14 @@
     root.setAttribute("data-theme", saved);
   }
 
+  const prefersDark =
+    window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
   function effectiveTheme() {
     const attr = root.getAttribute("data-theme");
     if (attr === "dark" || attr === "light") {
       return attr;
     }
-    return window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
+    return prefersDark && prefersDark.matches ? "dark" : "light";
   }
 
   const de = (navigator.language || "en").toLowerCase().indexOf("de") === 0;
