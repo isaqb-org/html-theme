@@ -62,7 +62,7 @@ audio:not([controls]) {
 
 /** 1. Prevent system color scheme's background color being used in Firefox, IE, and Opera. 2. Prevent system color scheme's text color being used in Firefox, IE, and Opera. 3. Set default font family to sans-serif. 4. Prevent iOS text size adjust after orientation change, without disabling user zoom. */
 html {
-  background: #fff; /* 1 */
+  background: var(--color-page-bg); /* 1 */
   color: #000; /* 2 */
   font-family: sans-serif; /* 3 */
 }
@@ -260,8 +260,12 @@ table {
   --color-icon-muted: #999;            /* line numbers, procedure numerals */
   --color-table-head-bg: #1D313E;      /* table thead/tfoot */
   --color-table-stripe-bg: #f0f4f8;    /* table even-row */
-  --color-shadow-soft: #eaeaea;        /* soft bg tint */
+  --color-shadow-soft: #eaeaea;        /* soft bg tint, sidebar-title bg */
   --color-danger-red: #bf0000;         /* .red utility + icon-important */
+
+  --color-page-bg: white;              /* html/body background */
+  --color-surface: white;              /* cards: table, toc, example, sidebar */
+  --color-surface-alt: whitesmoke;     /* footer background */
 
   --font-sans: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
 
@@ -300,7 +304,7 @@ html {
 }
 
 body {
-  background: white;
+  background: var(--color-page-bg);
   color: var(--color-body-navy);
   padding: 0;
   margin: 0;
@@ -411,6 +415,13 @@ a {
   color: var(--color-brand-orange);
   text-decoration: none;
   line-height: inherit;
+  overflow-wrap: break-word;
+}
+
+/* Bare URLs (e.g. references) have no spaces — let them break anywhere so a
+   long link can't force horizontal page scroll. */
+a.bare {
+  overflow-wrap: anywhere;
 }
 
 a:hover, a:focus {
@@ -725,7 +736,7 @@ blockquote, blockquote p {
 
 /* Tables */
 table {
-  background: white;
+  background: var(--color-surface);
   margin-bottom: var(--space-5);
   border: solid 1px var(--color-border-light);
 }
@@ -971,7 +982,7 @@ div .details br {
   border-color: var(--color-border-lighter);
   margin-bottom: var(--space-5);
   padding: var(--space-5);
-  background: white;
+  background: var(--color-surface);
   border-width: 0;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
@@ -1015,7 +1026,7 @@ div .details br {
 
 #footer {
   max-width: 100%;
-  background-color: whitesmoke;
+  background-color: var(--color-surface-alt);
   padding: var(--space-5);
 }
 
@@ -1134,7 +1145,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
   border-color: var(--color-border-lighter);
   margin-bottom: var(--space-5);
   padding: var(--space-5);
-  background: white;
+  background: var(--color-surface);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
 }
@@ -1170,7 +1181,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
   border-color: var(--color-border-lighter);
   margin-bottom: var(--space-5);
   padding: var(--space-5);
-  background: white;
+  background: var(--color-surface);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
 }
@@ -1204,7 +1215,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
   line-height: 1.4;
   border-width: 0 0 1px;
   border-style: solid;
-  border-color: #cacaca;
+  border-color: var(--color-border-light);
   background: var(--color-shadow-soft);
 }
 
@@ -1994,3 +2005,65 @@ h2 {
   }
 }
 
+
+/* === SECTION: DARK MODE ===
+   Honors the OS/browser preference. Palette is a designed dark scheme, not an
+   inversion: CI brand orange stays the accent; navy family maps to dark
+   surfaces; text maps to light slate. Only the color tokens flip — layout,
+   type, and spacing are unchanged. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-heading-navy: #e8edf1;     /* headings → near-white */
+    --color-body-navy: #c4ced6;        /* body text → light slate */
+    --color-muted-gray: #9aa6af;       /* muted text a touch lighter */
+    --color-text-muted: #aeb9c1;       /* blockquote/admonition text */
+    --color-text-dark: #dbe2e8;        /* block-content text → light */
+    --color-border-light: #34434e;     /* hairlines on dark */
+    --color-border-lighter: #2c3a44;   /* card borders on dark */
+    --color-table-head-bg: #0f1a22;    /* header darker than page */
+    --color-table-stripe-bg: #1f2d37;  /* subtle stripe on dark */
+    --color-shadow-soft: #26333d;      /* sidebar-title bg on dark */
+    --color-page-bg: #121b22;          /* page: deep navy, not black */
+    --color-surface: #1a262e;          /* cards: slightly above page */
+    --color-surface-alt: #202e38;      /* footer */
+    --shadow-sm: 0 1px 3px rgb(0 0 0 / 45%), 0 1px 2px rgb(0 0 0 / 35%);
+    --shadow-md: 0 6px 16px rgb(0 0 0 / 50%), 0 2px 4px rgb(0 0 0 / 40%);
+  }
+
+  /* RESET set html color:#000 for light; make base text light so anything
+     not covered by body's color inherits correctly. */
+  html {
+    color: var(--color-body-navy);
+  }
+
+  /* Row-hover tint was navy-on-white; needs light-on-dark to be visible. */
+  table tbody tr:hover {
+    background: rgb(255 255 255 / 6%);
+  }
+
+  /* The TIP admonition icon is drawn near-black (#111) — invisible on a dark
+     surface. Swap in a gold lightbulb (only this icon needs it; the others
+     are mid-tone and read fine on dark). */
+  .admonitionblock td.icon .icon-tip::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2.3v1h6v-1c0-1.1.4-1.8 1-2.3A7 7 0 0 0 12 2z' fill='%23f5d76e'/%3E%3Crect x='9' y='19' width='6' height='2' rx='1' fill='%23f5d76e'/%3E%3Crect x='10' y='22' width='4' height='1.5' rx='.75' fill='%23f5d76e'/%3E%3C/svg%3E");
+  }
+}
+
+/* === SECTION: MOBILE ===
+   Narrow-screen fixes. The ISAQB override zeroes #content side padding (fine
+   when the 800px column is centered in a wide viewport, but flush to the edge
+   below that), and wide tables would otherwise push the whole page sideways. */
+@media (max-width: 840px) {
+  #header, #content, #footnotes {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+}
+
+@media (max-width: 768px) {
+  /* Let a wide table scroll inside its own box instead of the page. */
+  table.tableblock {
+    display: block;
+    overflow-x: auto;
+  }
+}
