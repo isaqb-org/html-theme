@@ -1396,6 +1396,20 @@ table.tableblock.grid-all {
   border-bottom: 1px solid var(--color-border-light);
 }
 
+/* Headerless grid tables (e.g. the per-chapter "Lehre / Übung" duration box)
+   have no dark header or row striping, so the shared spacing-gap grid above
+   renders as an invisible white gap between cells. Give these real hairline
+   gridlines instead, so the cell divider is actually visible. Header tables
+   are untouched. */
+table.tableblock.grid-all:not(:has(thead)) {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+table.tableblock.grid-all:not(:has(thead)) td {
+  border: 1px solid var(--color-border-light);
+}
+
 table.tableblock.frame-topbot, table.tableblock.frame-none {
   border-left: 0;
   border-right: 0;
