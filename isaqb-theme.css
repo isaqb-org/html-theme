@@ -60,9 +60,6 @@ audio:not([controls]) {
 
 /* ========================================================================== Base ========================================================================== */
 
-/** Base page background + text color. (normalize's default font-family:
-    sans-serif dropped — redundant now that `body` sets font-family: var(--font-sans)
-    and all content lives in body.) Both use tokens so dark mode flips them. */
 html {
   background: var(--color-page-bg);
   color: var(--color-body-navy);
@@ -245,9 +242,7 @@ table {
   border-spacing: 0;
 }
 
-/* === SECTION: TOKENS ===
-   CI colors are fixed — change how they're referenced, never the value.
-   Type = modular scale (--text-*), spacing = 4px grid (--space-*). === */
+/* === SECTION: TOKENS === */
 :root {
   --color-brand-orange: #f39200;       /* link color, anchor icon */
   --color-brand-orange-hover: #fe670a; /* link hover/focus */
@@ -420,8 +415,7 @@ a {
   overflow-wrap: break-word;
 }
 
-/* Bare URLs (e.g. references) have no spaces — let them break anywhere so a
-   long link can't force horizontal page scroll. */
+/* Long bare URLs must wrap, else they force horizontal page scroll. */
 a.bare {
   overflow-wrap: anywhere;
 }
@@ -657,8 +651,6 @@ blockquote, blockquote p {
 
 /* === SECTION: PRINT === */
 
-/* Print styles.  Inlined to avoid required HTTP connection: www.phpied.com/delay-loading-your-print-css/ Credit to Paul Irish and HTML5 Boilerplate (html5boilerplate.com)
-*/
 .print-only {
   display: none !important;
 }
@@ -1412,11 +1404,7 @@ table.tableblock.grid-all {
   border-bottom: 1px solid var(--color-border-light);
 }
 
-/* Headerless grid tables (e.g. the per-chapter "Lehre / Übung" duration box)
-   have no dark header or row striping, so the shared spacing-gap grid above
-   renders as an invisible white gap between cells. Give these real hairline
-   gridlines instead, so the cell divider is actually visible. Header tables
-   are untouched. */
+/* Headerless grid tables (duration box): real gridlines, not the spacing-gap grid. */
 table.tableblock.grid-all:not(:has(thead)) {
   border-collapse: collapse;
   border-spacing: 0;
@@ -1952,8 +1940,7 @@ h2 {
   padding-left: var(--space-4);
 }
 
-/* Crisp CSS bullet — small CI-orange square, rounded to match the card
-   radius language. Replaces the old raster chevron PNG (blurry on HiDPI). */
+/* CSS bullet — CI-orange square (replaces the raster chevron PNG). */
 #content ul li::before {
   content: "";
   position: absolute;
@@ -2009,17 +1996,7 @@ h2 {
 }
 
 
-/* === SECTION: DARK MODE ===
-   A designed dark scheme, not an inversion: CI brand orange stays the accent;
-   navy family maps to dark surfaces; text maps to light slate. Only color
-   tokens flip — layout, type, spacing unchanged.
-
-   Two triggers:
-   - automatic: OS prefers dark, UNLESS the reader forced light via the toggle
-     (`:root[data-theme="light"]`), which just leaves the light base :root in place.
-   - manual: the toggle sets `:root[data-theme="dark"]`.
-   The two token blocks below are intentionally IDENTICAL — keep them in sync.
-   (data-theme is set by the toggle button injected in adoc-theme.js.) */
+/* === SECTION: DARK MODE (auto via OS pref + manual via data-theme; keep both token blocks in sync) === */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --color-heading-navy: #e8edf1;     /* headings → near-white */
@@ -2060,9 +2037,7 @@ h2 {
   --shadow-md: 0 6px 16px rgb(0 0 0 / 50%), 0 2px 4px rgb(0 0 0 / 40%);
 }
 
-/* The TIP admonition icon color is baked into its SVG data-URI (#111,
-   invisible on dark) — can't be a token flip, so it's overridden per trigger
-   with a gold lightbulb. The other 4 icons are mid-tone and read fine on dark. */
+/* TIP icon fill is baked into its SVG (#111, invisible on dark) → gold on dark. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .admonitionblock td.icon .icon-tip::before {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2.3v1h6v-1c0-1.1.4-1.8 1-2.3A7 7 0 0 0 12 2z' fill='%23f5d76e'/%3E%3Crect x='9' y='19' width='6' height='2' rx='1' fill='%23f5d76e'/%3E%3Crect x='10' y='22' width='4' height='1.5' rx='.75' fill='%23f5d76e'/%3E%3C/svg%3E");
@@ -2114,10 +2089,7 @@ h2 {
   }
 }
 
-/* === SECTION: MOBILE ===
-   Narrow-screen fixes. The ISAQB override zeroes #content side padding (fine
-   when the 800px column is centered in a wide viewport, but flush to the edge
-   below that), and wide tables would otherwise push the whole page sideways. */
+/* === SECTION: MOBILE === */
 @media (max-width: 840px) {
   #header, #content, #footnotes {
     padding-left: var(--space-4);

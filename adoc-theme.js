@@ -1,10 +1,4 @@
-/*
- * Highlights the currently-read section in the AsciiDoctor TOC (#toc,
- * either the in-content macro or the fixed toc2 sidebar) by toggling
- * `.is-active` on the matching link, using IntersectionObserver — no
- * dependencies. Styling for `.is-active` lives in isaqb-theme.css.
- * No-ops safely if there's no #toc or no matching headings on the page.
- */
+// TOC scroll-spy: toggles .is-active on the link for the section in view.
 (function () {
   var toc = document.getElementById('toc');
   if (!toc) return;
@@ -38,18 +32,12 @@
   headings.forEach(function (heading) { observer.observe(heading); });
 })();
 
-/*
- * Light/dark theme toggle. Injects a fixed button (styled as #theme-toggle in
- * isaqb-theme.css). Three-state behavior: with no saved choice the page
- * follows the OS `prefers-color-scheme`; clicking sets an explicit choice
- * (`data-theme` on <html>) that overrides the OS pref and persists in
- * localStorage. No dependencies.
- */
+// Light/dark toggle: no saved choice follows the OS; click sets and persists
+// an explicit data-theme on <html>. Button styled as #theme-toggle.
 (function () {
   var root = document.documentElement;
   var KEY = 'isaqb-theme';
 
-  // Apply a previously saved choice (if any) before the button is built.
   var saved = null;
   try { saved = localStorage.getItem(KEY); } catch (e) { /* storage blocked */ }
   if (saved === 'dark' || saved === 'light') root.setAttribute('data-theme', saved);
