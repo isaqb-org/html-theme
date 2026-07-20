@@ -1,3 +1,7 @@
+/* ================================================================
+   SECTION: RESET (normalize.css v2.1.1)
+   See CSS-IMPROVEMENT-PLAN.md for the ongoing cleanup plan for this file.
+   ================================================================ */
 /* normalize.css v2.1.1 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
 /** Correct `block` display not defined in IE 8/9. */
@@ -211,6 +215,36 @@ table {
   border-spacing: 0;
 }
 
+/* ================================================================
+   SECTION: TOKENS
+   CI colors — values must not change, only how they're referenced.
+   Only colors that repeat >=2x with one consistent semantic role are
+   tokenized here. Left alone on purpose: the one-off Foundation
+   "rainbow" utility classes (.aqua, .navy, .maroon, ...) further down,
+   and all spacing/type-scale em values (see CSS-IMPROVEMENT-PLAN.md,
+   step 3 — needs a real scale, not a var() wrap around arbitrary numbers).
+   ================================================================ */
+:root {
+  --color-brand-orange: #f39200;       /* link color, anchor icon */
+  --color-brand-orange-hover: #fe670a; /* link hover/focus */
+  --color-heading-navy: #263e4d;       /* headings, header h1, anchor .link */
+  --color-body-navy: #174a6a;          /* body text, footer text, table cell text */
+  --color-muted-gray: #777a7b;         /* subheader/title text, toc title, blockquote cite */
+  --color-border-light: #dddddd;       /* hairline borders throughout */
+  --color-border-lighter: #e6e6e6;     /* toc/example/sidebar block borders */
+  --color-text-dark: #333333;          /* pre bg, block content headings, conum bg */
+  --color-text-muted: #666666;         /* code color, blockquote/admonition text */
+  --color-icon-muted: #999;            /* line numbers, lang labels, procedure numerals */
+  --color-table-head-bg: #1D313E;      /* table thead/tfoot background */
+  --color-table-stripe-bg: #f0f4f8;    /* table even-row background */
+  --color-shadow-soft: #eaeaea;        /* soft box-shadow / bg tint */
+  --color-danger-red: #bf0000;         /* .red utility + icon-important (coincidentally shared) */
+  --radius-sm: 3px;                    /* small block/code corner radius */
+}
+
+/* ================================================================
+   SECTION: BASE RESET & LAYOUT UTILITIES
+   ================================================================ */
 *, *:before, *:after {
   box-sizing: border-box;
 }
@@ -221,7 +255,7 @@ html, body {
 
 body {
   background: white;
-  color: #174a6a;
+  color: var(--color-body-navy);
   padding: 0;
   margin: 0;
   font-family: "Roboto", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
@@ -303,6 +337,9 @@ select {
   width: 100%;
 }
 
+/* ================================================================
+   SECTION: TYPOGRAPHY
+   ================================================================ */
 p.lead, .paragraph.lead > p, #preamble > .sectionbody > .paragraph:first-of-type p {
   font-size: 1.23333em;
   line-height: 1.6;
@@ -310,7 +347,7 @@ p.lead, .paragraph.lead > p, #preamble > .sectionbody > .paragraph:first-of-type
 
 .subheader, #content #toctitle, .admonitionblock td.content > .title, .exampleblock > .title, .imageblock > .title, .videoblock > .title, .listingblock > .title, .literalblock > .title, .openblock > .title, .paragraph > .title, .quoteblock > .title, .sidebarblock > .title, .tableblock > .title, .verseblock > .title, .dlist > .title, .olist > .title, .ulist > .title, .qlist > .title, .hdlist > .title, .tableblock > caption {
   line-height: 1.4;
-  color: #777a7b;
+  color: var(--color-muted-gray);
   font-weight: 300;
   margin-top: 0.2em;
   margin-bottom: 0.5em;
@@ -325,13 +362,13 @@ div, dl, dt, dd, ul, ol, li, h1, h2, h3, #toctitle, .sidebarblock > .content > .
 
 /* Default Link Styles */
 a {
-  color: #f39200;
+  color: var(--color-brand-orange);
   text-decoration: none;
   line-height: inherit;
 }
 
 a:hover, a:focus {
-  color: #fe670a;
+  color: var(--color-brand-orange-hover);
 }
 
 a img {
@@ -359,7 +396,7 @@ h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 {
   font-family: "Roboto", helvetica, arial, freesans, clean, sans-serif;
   font-weight: bold;
   font-style: normal;
-  color: #263e4d;
+  color: var(--color-heading-navy);
   text-rendering: optimizeLegibility;
   margin-top: 0.2em;
   margin-bottom: 0.5em;
@@ -397,7 +434,7 @@ h6 {
 }
 
 hr {
-  border: solid #dddddd;
+  border: solid var(--color-border-light);
   border-width: 1px 0 0;
   clear: both;
   margin: 1.33333em 0 1.26667em;
@@ -423,7 +460,7 @@ small {
 code {
   font-family: Monaco, "DejaVu Sans Mono", "Courier New", monospace;
   font-weight: normal;
-  color: #666666;
+  color: var(--color-text-muted);
 }
 
 /* Lists */
@@ -486,8 +523,8 @@ dl dd {
 abbr, acronym {
   text-transform: uppercase;
   font-size: 90%;
-  color: #333333;
-  border-bottom: 1px dotted #dddddd;
+  color: var(--color-text-dark);
+  border-bottom: 1px dotted var(--color-border-light);
   cursor: help;
 }
 
@@ -505,7 +542,7 @@ blockquote {
 blockquote cite {
   display: block;
   font-size: 0.86667em;
-  color: #777a7b;
+  color: var(--color-muted-gray);
 }
 
 blockquote cite:before {
@@ -513,19 +550,19 @@ blockquote cite:before {
 }
 
 blockquote cite a, blockquote cite a:visited {
-  color: #777a7b;
+  color: var(--color-muted-gray);
 }
 
 blockquote, blockquote p {
   line-height: 1.4;
-  color: #777a7b;
+  color: var(--color-muted-gray);
 }
 
 /* Microformats */
 .vcard {
   display: inline-block;
   margin: 0 0 1.33333em 0;
-  border: 1px solid #dddddd;
+  border: 1px solid var(--color-border-light);
   padding: 0.66667em 0.8em;
 }
 
@@ -551,6 +588,9 @@ blockquote, blockquote p {
   padding: 0 0.06667em;
 }
 
+/* ================================================================
+   SECTION: RESPONSIVE TYPE SCALE
+   ================================================================ */
 @media only screen and (min-width: 768px) {
   h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 {
     line-height: 1.4;
@@ -577,6 +617,9 @@ blockquote, blockquote p {
   }
 }
 
+/* ================================================================
+   SECTION: PRINT
+   ================================================================ */
 /* Print styles.  Inlined to avoid required HTTP connection: www.phpied.com/delay-loading-your-print-css/ Credit to Paul Irish and HTML5 Boilerplate (html5boilerplate.com)
 */
 .print-only {
@@ -608,7 +651,7 @@ blockquote, blockquote p {
   }
 
   pre, blockquote {
-    border: 1px solid #999;
+    border: 1px solid var(--color-icon-muted);
     page-break-inside: avoid;
   }
 
@@ -654,15 +697,18 @@ blockquote, blockquote p {
   }
 }
 
+/* ================================================================
+   SECTION: BASE TABLES
+   ================================================================ */
 /* Tables */
 table {
   background: white;
   margin-bottom: 1.33333em;
-  border: solid 1px #dddddd;
+  border: solid 1px var(--color-border-light);
 }
 
 table thead, table tfoot {
-  background: #1D313E;
+  background: var(--color-table-head-bg);
   color: white;
   font-weight: bold;
 }
@@ -677,11 +723,11 @@ table thead tr th, table thead tr td, table tfoot tr th, table tfoot tr td {
 table tr th, table tr td {
   padding: 0.6em 0.66667em;
   font-size: 0.8em;
-  color: #174a6a;
+  color: var(--color-body-navy);
 }
 
 table tr.even, table tr.alt, table tr:nth-of-type(even) {
-  background: #f0f4f8;
+  background: var(--color-table-stripe-bg);
 }
 
 table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoot tr td {
@@ -689,6 +735,12 @@ table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoo
   line-height: 1.4;
 }
 
+/* ================================================================
+   SECTION: ASCIIDOC COMPONENTS
+   (code/kbd, page layout, toc, footer, admonition/example/sidebar/
+   listing/quote blocks, table variants, hdlist/colist, images,
+   footnotes, gist, print-break helpers)
+   ================================================================ */
 a:hover, a:focus {
   text-decoration: underline;
 }
@@ -707,8 +759,8 @@ a:hover, a:focus {
   padding: 1px 5px 1px 5px;
   white-space: nowrap;
   background-color: transparent;
-  border: 1px solid #dddddd;
-  border-radius: 3px;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-sm);
   text-shadow: none;
 }
 
@@ -720,17 +772,17 @@ pre, pre > code {
 }
 
 kbd.keyseq {
-  color: #666666;
+  color: var(--color-text-muted);
 }
 
 kbd:not(.keyseq) {
   display: inline-block;
-  color: #333333;
+  color: var(--color-text-dark);
   font-size: 0.8em;
   line-height: 1.4;
   background-color: #F7F7F7;
   border: 1px solid #ccc;
-  border-radius: 3px;
+  border-radius: var(--radius-sm);
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
   margin: -0.15em 0.15em 0 0.15em;
   padding: 0.2em 0.6em 0.2em 0.5em;
@@ -777,15 +829,15 @@ kbd kbd:last-child {
 }
 
 #header > h1 {
-  color: #263e4d;
+  color: var(--color-heading-navy);
   font-weight: 300;
-  border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid var(--color-border-light);
   margin-bottom: -28px;
   padding-bottom: 32px;
 }
 
 #header span {
-  color: #777a7b;
+  color: var(--color-muted-gray);
 }
 
 #header #revnumber {
@@ -813,7 +865,7 @@ div .details br {
 }
 
 #toc {
-  border-bottom: 0 solid #dddddd;
+  border-bottom: 0 solid var(--color-border-light);
   padding-bottom: 1.33333em;
 }
 
@@ -836,7 +888,7 @@ div .details br {
 }
 
 #toctitle {
-  color: #777a7b;
+  color: var(--color-muted-gray);
 }
 
 @media only screen and (min-width: 1280px) {
@@ -849,7 +901,7 @@ div .details br {
     width: 20em;
     left: 0;
     top: 0;
-    border-right: 1px solid #dddddd;
+    border-right: 1px solid var(--color-border-light);
     border-bottom: 0;
     z-index: 1000;
     padding: 1em;
@@ -883,7 +935,7 @@ div .details br {
 
   body.toc2.toc-right #toc.toc2 {
     border-right: 0;
-    border-left: 1px solid #dddddd;
+    border-left: 1px solid var(--color-border-light);
     left: auto;
     right: 0;
   }
@@ -891,12 +943,12 @@ div .details br {
 
 #content #toc {
   border-style: solid;
-  border-color: #e6e6e6;
+  border-color: var(--color-border-lighter);
   margin-bottom: 1.33333em;
   padding: 1.33333em;
   background: white;
   border-width: 0;
-  border-radius: 3px;
+  border-radius: var(--radius-sm);
 }
 
 #content #toc > :first-child {
@@ -925,7 +977,7 @@ div .details br {
 }
 
 #footer-text {
-  color: #174a6a;
+  color: var(--color-body-navy);
   line-height: 1.26;
 }
 
@@ -934,7 +986,7 @@ div .details br {
 }
 
 .sect1 + .sect1 {
-  border-top: 0 solid #dddddd;
+  border-top: 0 solid var(--color-border-light);
 }
 
 #content h1 > a.anchor, h2 > a.anchor, h3 > a.anchor, #toctitle > a.anchor, .sidebarblock > .content > .title > a.anchor, h4 > a.anchor, h5 > a.anchor, h6 > a.anchor {
@@ -961,7 +1013,7 @@ div .details br {
 }
 
 #content h1 > a.link, h2 > a.link, h3 > a.link, #toctitle > a.link, .sidebarblock > .content > .title > a.link, h4 > a.link, h5 > a.link, h6 > a.link {
-  color: #263e4d;
+  color: var(--color-heading-navy);
   text-decoration: none;
 }
 
@@ -1021,8 +1073,8 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 .admonitionblock > table td.content {
   padding-left: 1.2em;
   padding-right: 1.33333em;
-  border-left: 1px solid #dddddd;
-  color: #666666;
+  border-left: 1px solid var(--color-border-light);
+  color: var(--color-text-muted);
 }
 
 .admonitionblock > table td.content > :last-child > :last-child {
@@ -1032,11 +1084,11 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 .exampleblock > .content {
   border-style: solid;
   border-width: 1px;
-  border-color: #e6e6e6;
+  border-color: var(--color-border-lighter);
   margin-bottom: 1.33333em;
   padding: 1.33333em;
   background: white;
-  border-radius: 3px;
+  border-radius: var(--radius-sm);
 }
 
 .exampleblock > .content > :first-child {
@@ -1048,7 +1100,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 }
 
 .exampleblock > .content h1, .exampleblock > .content h2, .exampleblock > .content h3, .exampleblock > .content #toctitle, .sidebarblock.exampleblock > .content > .title, .exampleblock > .content h4, .exampleblock > .content h5, .exampleblock > .content h6, .exampleblock > .content p {
-  color: #333333;
+  color: var(--color-text-dark);
 }
 
 .exampleblock > .content h1, .exampleblock > .content h2, .exampleblock > .content h3, .exampleblock > .content #toctitle, .sidebarblock.exampleblock > .content > .title, .exampleblock > .content h4, .exampleblock > .content h5, .exampleblock > .content h6 {
@@ -1061,17 +1113,17 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 }
 
 .exampleblock.result > .content {
-  box-shadow: 0 1px 8px #eaeaea;
+  box-shadow: 0 1px 8px var(--color-shadow-soft);
 }
 
 .sidebarblock {
   border-style: solid;
   border-width: 1px;
-  border-color: #e6e6e6;
+  border-color: var(--color-border-lighter);
   margin-bottom: 1.33333em;
   padding: 1.33333em;
   background: white;
-  border-radius: 3px;
+  border-radius: var(--radius-sm);
 }
 
 .sidebarblock > :first-child {
@@ -1083,7 +1135,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 }
 
 .sidebarblock h1, .sidebarblock h2, .sidebarblock h3, .sidebarblock #toctitle, .sidebarblock > .content > .title, .sidebarblock h4, .sidebarblock h5, .sidebarblock h6, .sidebarblock p {
-  color: #333333;
+  color: var(--color-text-dark);
 }
 
 .sidebarblock h1, .sidebarblock h2, .sidebarblock h3, .sidebarblock #toctitle, .sidebarblock > .content > .title, .sidebarblock h4, .sidebarblock h5, .sidebarblock h6 {
@@ -1096,7 +1148,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 }
 
 .sidebarblock > .content > .title {
-  color: #777a7b;
+  color: var(--color-muted-gray);
   margin-top: 0;
   line-height: 1.4;
   border-width: 0 0 1px 0;
@@ -1109,11 +1161,11 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 }
 
 .literalblock > .content pre, .listingblock > .content pre {
-  background: #333333;
+  background: var(--color-text-dark);
   border-width: 2px;
   border-style: solid;
-  border-color: #dddddd;
-  border-radius: 3px;
+  border-color: var(--color-border-light);
+  border-radius: var(--radius-sm);
   padding: 0.66667em;
   word-wrap: break-word;
 }
@@ -1153,7 +1205,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 .listingblock:hover code[class*=" language-"]:before {
   text-transform: uppercase;
   font-size: 0.9em;
-  color: #999;
+  color: var(--color-icon-muted);
   position: absolute;
   top: 0.4em;
   right: 0.4em;
@@ -1210,7 +1262,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 .listingblock.terminal pre .command:before {
   content: attr(data-prompt);
   padding-right: 0.5em;
-  color: #999;
+  color: var(--color-icon-muted);
 }
 
 .listingblock.terminal pre .command:not([data-prompt]):before {
@@ -1234,10 +1286,10 @@ table.pyhltable td.code {
 }
 
 .highlight.pygments .lineno, table.pyhltable td:not(.code) {
-  color: #999;
+  color: var(--color-icon-muted);
   padding-left: 0;
   padding-right: .5em;
-  border-right: 1px solid #dddddd;
+  border-right: 1px solid var(--color-border-light);
 }
 
 .highlight.pygments .lineno {
@@ -1270,7 +1322,7 @@ table.pyhltable .linenodiv {
   margin-top: -.25em;
   padding-bottom: 0.6em;
   font-size: 0.86667em;
-  color: #666666;
+  color: var(--color-text-muted);
 }
 
 .quoteblock .attribution br {
@@ -1289,9 +1341,9 @@ table thead th, table tfoot th {
 table.tableblock.grid-all {
   border-collapse: separate;
   border-spacing: 1px;
-  border-radius: 3px;
-  border-top: 1px solid #dddddd;
-  border-bottom: 1px solid #dddddd;
+  border-radius: var(--radius-sm);
+  border-top: 1px solid var(--color-border-light);
+  border-bottom: 1px solid var(--color-border-light);
 }
 
 table.tableblock.frame-topbot, table.tableblock.frame-none {
@@ -1333,7 +1385,7 @@ th.tableblock.valign-middle, td.tableblock.valign-middle {
 }
 
 p.tableblock.header {
-  color: #263e4d;
+  color: var(--color-heading-navy);
   font-weight: bold;
 }
 
@@ -1470,7 +1522,7 @@ td.hdlist1, td.hdlist2 {
   line-height: 0;
   display: inline-block;
   border: solid 4px white;
-  box-shadow: 0 0 0 1px #dddddd;
+  box-shadow: 0 0 0 1px var(--color-border-light);
 }
 
 .imageblock.left, .imageblock[style*="float: left"] {
@@ -1573,6 +1625,13 @@ div.unbreakable {
   page-break-inside: avoid;
 }
 
+/* ================================================================
+   SECTION: COLOR & TEXT UTILITIES
+   The .{color}/.{color}-background classes below are Foundation's
+   stock 16-swatch set, each used once — candidates for a usage audit
+   and possible removal (see CSS-IMPROVEMENT-PLAN.md, step 9). Left
+   as raw hex on purpose: no reuse benefit from tokenizing one-offs.
+   ================================================================ */
 .big {
   font-size: larger;
 }
@@ -1682,7 +1741,7 @@ div.unbreakable {
 }
 
 .red {
-  color: #bf0000;
+  color: var(--color-danger-red);
 }
 
 .red-background {
@@ -1721,6 +1780,11 @@ div.unbreakable {
   background-color: #fafa00;
 }
 
+/* ================================================================
+   SECTION: ICONS & ADMONITION GLYPHS
+   Icon glyphs below are hardcoded old FontAwesome 3/4 codepoints —
+   brittle, see CSS-IMPROVEMENT-PLAN.md step 5 for the SVG replacement plan.
+   ================================================================ */
 span.icon > [class^="icon-"], span.icon > [class*=" icon-"] {
   cursor: default;
 }
@@ -1754,13 +1818,13 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] {
 
 .admonitionblock td.icon .icon-important:before {
   content: "\f06a";
-  color: #bf0000;
+  color: var(--color-danger-red);
 }
 
 .conum {
   display: inline-block;
   color: white !important;
-  background-color: #333333;
+  background-color: var(--color-text-dark);
   border-radius: 100px;
   text-align: center;
   width: 20px;
@@ -1791,18 +1855,29 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] {
   display: none;
 }
 
+/* ================================================================
+   SECTION: ISAQB SITE OVERRIDES
+   Tail appended over the stock github/asciidoctor theme above.
+   Known unmerged duplicates in this section (see CSS-IMPROVEMENT-PLAN.md
+   step 4, not yet done): this p.lead redefines the one further up;
+   the h1/h2/h3 anchor color rule below redefines the one further up;
+   .quoteblock blockquote and .sidebarblock > .content > .title further
+   down each redefine an earlier rule too. Don't reorder any of these
+   four without merging them first — the cascade currently depends on
+   this block coming last.
+   ================================================================ */
 p.lead, .paragraph.lead > p, #preamble > .sectionbody > .paragraph:first-of-type p {
   font-size: 1em;
-  color: #666666;
+  color: var(--color-text-muted);
 }
 
 h2 {
-  color: #263e4d;
-  border-bottom: 1px solid #dddddd;
+  color: var(--color-heading-navy);
+  border-bottom: 1px solid var(--color-border-light);
 }
 
 #content h1 > a.anchor, h2 > a.anchor, h3 > a.anchor, #toctitle > a.anchor, .sidebarblock > .content > .title > a.anchor, h4 > a.anchor, h5 > a.anchor, h6 > a.anchor {
-  color: #f39200;
+  color: var(--color-brand-orange);
 }
 
 #header, #content, #footnotes {
@@ -1841,7 +1916,7 @@ h2 {
   height: 100%;
   width: 30px;
   padding: 0 10px 0 0;
-  color: #999;
+  color: var(--color-icon-muted);
   font-size: 1.46667em;
   font-weight: bold;
   line-height: 1.6;
@@ -1858,6 +1933,6 @@ h2 {
   margin: -20px -20px 20px;
   padding: 1em;
   font-size: 0.8em;
-  background: #eaeaea;
+  background: var(--color-shadow-soft);
 }
 
