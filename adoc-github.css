@@ -220,9 +220,18 @@ table {
    CI colors — values must not change, only how they're referenced.
    Only colors that repeat >=2x with one consistent semantic role are
    tokenized here. Left alone on purpose: the one-off Foundation
-   "rainbow" utility classes (.aqua, .navy, .maroon, ...) further down,
-   and all spacing/type-scale em values (see CSS-IMPROVEMENT-PLAN.md,
-   step 3 — needs a real scale, not a var() wrap around arbitrary numbers).
+   "rainbow" utility classes (.aqua, .navy, .maroon, ...) further down.
+
+   The --scale-* values below are this file's original em-based
+   modular scale (Foundation 3, 15px root — see html,body font-size
+   further down). Kept as em, not rem, on purpose: several of them size
+   margins/line-height relative to their own element's font-size (e.g.
+   heading margins inside .exampleblock/.sidebarblock), and rem would
+   flatten that relationship. Only values reused >=2x outside the
+   RESET section were extracted; single-use magic numbers and a
+   handful of shorthand-embedded values (documented in
+   CSS-IMPROVEMENT-PLAN.md, step 3) were left as literals — no reuse
+   benefit from tokenizing a number used exactly once.
    ================================================================ */
 :root {
   --color-brand-orange: #f39200;       /* link color, anchor icon */
@@ -240,6 +249,18 @@ table {
   --color-shadow-soft: #eaeaea;        /* soft box-shadow / bg tint */
   --color-danger-red: #bf0000;         /* .red utility + icon-important (coincidentally shared) */
   --radius-sm: 3px;                    /* small block/code corner radius */
+
+  --scale-020: 0.2em;                  /* ~3px  — heading top-margin, hover-label offsets */
+  --scale-027: 0.26667em;              /* ~4px  — toc indent, image spacing */
+  --scale-040: 0.4em;                  /* ~6px  — hover-label position offsets */
+  --scale-050: 0.5em;                  /* ~7.5px — paragraph/list spacing */
+  --scale-067: 0.66667em;              /* ~10px — dominant half-step: block spacing, h5 size */
+  --scale-070: 0.7em;                  /* ~10.5px — list left-margin (near-dupe of 067, kept as-is) */
+  --scale-087: 0.86667em;              /* ~13px — small text: code, blockquote cite */
+  --scale-093: 0.93333em;              /* ~14px — small text: asides, table cell headers */
+  --scale-120: 1.2em;                  /* ~18px — heading line-height, admonition padding */
+  --scale-133: 1.33333em;              /* ~20px — dominant block-spacing unit */
+  --scale-147: 1.46667em;              /* ~22px — inline-list spacing, procedure numeral size */
 }
 
 /* ================================================================
@@ -341,16 +362,17 @@ select {
    SECTION: TYPOGRAPHY
    ================================================================ */
 p.lead, .paragraph.lead > p, #preamble > .sectionbody > .paragraph:first-of-type p {
-  font-size: 1.23333em;
+  font-size: 1em;
   line-height: 1.6;
+  color: var(--color-text-muted);
 }
 
 .subheader, #content #toctitle, .admonitionblock td.content > .title, .exampleblock > .title, .imageblock > .title, .videoblock > .title, .listingblock > .title, .literalblock > .title, .openblock > .title, .paragraph > .title, .quoteblock > .title, .sidebarblock > .title, .tableblock > .title, .verseblock > .title, .dlist > .title, .olist > .title, .ulist > .title, .qlist > .title, .hdlist > .title, .tableblock > caption {
   line-height: 1.4;
   color: var(--color-muted-gray);
   font-weight: 300;
-  margin-top: 0.2em;
-  margin-bottom: 0.5em;
+  margin-top: var(--scale-020);
+  margin-bottom: var(--scale-050);
 }
 
 /* Typography resets */
@@ -386,7 +408,7 @@ p {
 }
 
 p aside {
-  font-size: 0.93333em;
+  font-size: var(--scale-093);
   line-height: 1.35;
   font-style: italic;
 }
@@ -398,9 +420,9 @@ h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 {
   font-style: normal;
   color: var(--color-heading-navy);
   text-rendering: optimizeLegibility;
-  margin-top: 0.2em;
-  margin-bottom: 0.5em;
-  line-height: 1.2em;
+  margin-top: var(--scale-020);
+  margin-bottom: var(--scale-050);
+  line-height: var(--scale-120);
 }
 
 h1 small, h2 small, h3 small, #toctitle small, .sidebarblock > .content > .title small, h4 small, h5 small, h6 small {
@@ -414,7 +436,7 @@ h1 {
 }
 
 h2 {
-  font-size: 1.33333em;
+  font-size: var(--scale-133);
 }
 
 h3, #toctitle, .sidebarblock > .content > .title {
@@ -422,11 +444,11 @@ h3, #toctitle, .sidebarblock > .content > .title {
 }
 
 h4 {
-  font-size: 0.86667em;
+  font-size: var(--scale-087);
 }
 
 h5 {
-  font-size: 0.66667em;
+  font-size: var(--scale-067);
 }
 
 h6 {
@@ -437,7 +459,7 @@ hr {
   border: solid var(--color-border-light);
   border-width: 1px 0 0;
   clear: both;
-  margin: 1.33333em 0 1.26667em;
+  margin: var(--scale-133) 0 1.26667em;
   height: 0;
 }
 
@@ -473,12 +495,12 @@ ul, ol, dl {
 }
 
 ul, ol {
-  margin-left: 0.7em;
+  margin-left: var(--scale-070);
 }
 
 /* Unordered Lists */
 ul li ul, ul li ol {
-  margin-left: 1.33333em;
+  margin-left: var(--scale-133);
   margin-bottom: 0;
   font-size: 1em; /* Override nested font-size change */
 }
@@ -505,7 +527,7 @@ ul.no-bullet {
 
 /* Ordered Lists */
 ol li ul, ol li ol {
-  margin-left: 1.33333em;
+  margin-left: var(--scale-133);
   margin-bottom: 0;
 }
 
@@ -516,7 +538,7 @@ dl dt {
 }
 
 dl dd {
-  margin-bottom: 1.33333em;
+  margin-bottom: var(--scale-133);
 }
 
 /* Abbreviations */
@@ -541,7 +563,7 @@ blockquote {
 
 blockquote cite {
   display: block;
-  font-size: 0.86667em;
+  font-size: var(--scale-087);
   color: var(--color-muted-gray);
 }
 
@@ -561,9 +583,9 @@ blockquote, blockquote p {
 /* Microformats */
 .vcard {
   display: inline-block;
-  margin: 0 0 1.33333em 0;
+  margin: 0 0 var(--scale-133) 0;
   border: 1px solid var(--color-border-light);
-  padding: 0.66667em 0.8em;
+  padding: var(--scale-067) 0.8em;
 }
 
 .vcard li {
@@ -609,7 +631,7 @@ blockquote, blockquote p {
   }
 
   h4 {
-    font-size: 1.2em;
+    font-size: var(--scale-120);
   }
 
   h5 {
@@ -703,7 +725,7 @@ blockquote, blockquote p {
 /* Tables */
 table {
   background: white;
-  margin-bottom: 1.33333em;
+  margin-bottom: var(--scale-133);
   border: solid 1px var(--color-border-light);
 }
 
@@ -714,14 +736,14 @@ table thead, table tfoot {
 }
 
 table thead tr th, table thead tr td, table tfoot tr th, table tfoot tr td {
-  padding: 0.53333em 0.66667em 0.66667em;
-  font-size: 0.93333em;
+  padding: 0.53333em var(--scale-067) var(--scale-067);
+  font-size: var(--scale-093);
   color: white;
   text-align: left;
 }
 
 table tr th, table tr td {
-  padding: 0.6em 0.66667em;
+  padding: 0.6em var(--scale-067);
   font-size: 0.8em;
   color: var(--color-body-navy);
 }
@@ -755,7 +777,7 @@ a:hover, a:focus {
 }
 
 *:not(pre) > code {
-  font-size: 0.86667em;
+  font-size: var(--scale-087);
   padding: 1px 5px 1px 5px;
   white-space: nowrap;
   background-color: transparent;
@@ -785,7 +807,7 @@ kbd:not(.keyseq) {
   border-radius: var(--radius-sm);
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px white inset;
   margin: -0.15em 0.15em 0 0.15em;
-  padding: 0.2em 0.6em 0.2em 0.5em;
+  padding: var(--scale-020) 0.6em var(--scale-020) 0.5em;
   vertical-align: middle;
   white-space: nowrap;
 }
@@ -866,11 +888,11 @@ div .details br {
 
 #toc {
   border-bottom: 0 solid var(--color-border-light);
-  padding-bottom: 1.33333em;
+  padding-bottom: var(--scale-133);
 }
 
 #toc > ul {
-  margin-left: 0.26667em;
+  margin-left: var(--scale-027);
 }
 
 #toc ul.sectlevel0 > li > a {
@@ -879,8 +901,8 @@ div .details br {
 
 #toc ul.sectlevel0 ul.sectlevel1 {
   margin-left: 0;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
+  margin-top: var(--scale-050);
+  margin-bottom: var(--scale-050);
 }
 
 #toc ul {
@@ -919,13 +941,13 @@ div .details br {
 
   #toc.toc2 ul ul {
     margin-left: 0;
-    padding-left: 1.33333em;
+    padding-left: var(--scale-133);
   }
 
   #toc.toc2 ul.sectlevel0 ul.sectlevel1 {
     padding-left: 0;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
+    margin-top: var(--scale-050);
+    margin-bottom: var(--scale-050);
   }
 
   body.toc2.toc-right {
@@ -944,8 +966,8 @@ div .details br {
 #content #toc {
   border-style: solid;
   border-color: var(--color-border-lighter);
-  margin-bottom: 1.33333em;
-  padding: 1.33333em;
+  margin-bottom: var(--scale-133);
+  padding: var(--scale-133);
   background: white;
   border-width: 0;
   border-radius: var(--radius-sm);
@@ -973,7 +995,7 @@ div .details br {
 #footer {
   max-width: 100%;
   background-color: whitesmoke;
-  padding: 1.33333em;
+  padding: var(--scale-133);
 }
 
 #footer-text {
@@ -982,7 +1004,7 @@ div .details br {
 }
 
 .sect1 {
-  padding-bottom: 1.33333em;
+  padding-bottom: var(--scale-133);
 }
 
 .sect1 + .sect1 {
@@ -998,6 +1020,7 @@ div .details br {
   visibility: hidden;
   text-align: center;
   font-weight: normal;
+  color: var(--color-brand-orange);
 }
 
 #content h1 > a.anchor:before, h2 > a.anchor:before, h3 > a.anchor:before, #toctitle > a.anchor:before, .sidebarblock > .content > .title > a.anchor:before, h4 > a.anchor:before, h5 > a.anchor:before, h6 > a.anchor:before {
@@ -1022,7 +1045,7 @@ div .details br {
 }
 
 .imageblock, .literalblock, .listingblock, .verseblock, .videoblock {
-  margin-bottom: 1.33333em;
+  margin-bottom: var(--scale-133);
 }
 
 .admonitionblock td.content > .title, .exampleblock > .title, .imageblock > .title, .videoblock > .title, .listingblock > .title, .literalblock > .title, .openblock > .title, .paragraph > .title, .quoteblock > .title, .sidebarblock > .title, .tableblock > .title, .verseblock > .title, .dlist > .title, .olist > .title, .ulist > .title, .qlist > .title, .hdlist > .title {
@@ -1071,8 +1094,8 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 }
 
 .admonitionblock > table td.content {
-  padding-left: 1.2em;
-  padding-right: 1.33333em;
+  padding-left: var(--scale-120);
+  padding-right: var(--scale-133);
   border-left: 1px solid var(--color-border-light);
   color: var(--color-text-muted);
 }
@@ -1085,8 +1108,8 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
   border-style: solid;
   border-width: 1px;
   border-color: var(--color-border-lighter);
-  margin-bottom: 1.33333em;
-  padding: 1.33333em;
+  margin-bottom: var(--scale-133);
+  padding: var(--scale-133);
   background: white;
   border-radius: var(--radius-sm);
 }
@@ -1105,7 +1128,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 
 .exampleblock > .content h1, .exampleblock > .content h2, .exampleblock > .content h3, .exampleblock > .content #toctitle, .sidebarblock.exampleblock > .content > .title, .exampleblock > .content h4, .exampleblock > .content h5, .exampleblock > .content h6 {
   line-height: 1;
-  margin-bottom: 0.66667em;
+  margin-bottom: var(--scale-067);
 }
 
 .exampleblock > .content h1.subheader, .exampleblock > .content h2.subheader, .exampleblock > .content h3.subheader, .exampleblock > .content .subheader#toctitle, .sidebarblock.exampleblock > .content > .subheader.title, .exampleblock > .content h4.subheader, .exampleblock > .content h5.subheader, .exampleblock > .content h6.subheader {
@@ -1120,8 +1143,8 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
   border-style: solid;
   border-width: 1px;
   border-color: var(--color-border-lighter);
-  margin-bottom: 1.33333em;
-  padding: 1.33333em;
+  margin-bottom: var(--scale-133);
+  padding: var(--scale-133);
   background: white;
   border-radius: var(--radius-sm);
 }
@@ -1140,7 +1163,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 
 .sidebarblock h1, .sidebarblock h2, .sidebarblock h3, .sidebarblock #toctitle, .sidebarblock > .content > .title, .sidebarblock h4, .sidebarblock h5, .sidebarblock h6 {
   line-height: 1;
-  margin-bottom: 0.66667em;
+  margin-bottom: var(--scale-067);
 }
 
 .sidebarblock h1.subheader, .sidebarblock h2.subheader, .sidebarblock h3.subheader, .sidebarblock .subheader#toctitle, .sidebarblock > .content > .subheader.title, .sidebarblock h4.subheader, .sidebarblock h5.subheader, .sidebarblock h6.subheader {
@@ -1149,11 +1172,14 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 
 .sidebarblock > .content > .title {
   color: var(--color-muted-gray);
-  margin-top: 0;
+  margin: -20px -20px 20px;
+  padding: 1em;
+  font-size: 0.8em;
   line-height: 1.4;
   border-width: 0 0 1px 0;
   border-style: solid;
   border-color: #cacaca;
+  background: var(--color-shadow-soft);
 }
 
 .exampleblock > .content > :last-child > :last-child, .exampleblock > .content .olist > ol > li:last-child > :last-child, .exampleblock > .content .ulist > ul > li:last-child > :last-child, .exampleblock > .content .qlist > ol > li:last-child > :last-child, .sidebarblock > .content > :last-child > :last-child, .sidebarblock > .content .olist > ol > li:last-child > :last-child, .sidebarblock > .content .ulist > ul > li:last-child > :last-child, .sidebarblock > .content .qlist > ol > li:last-child > :last-child {
@@ -1166,7 +1192,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
   border-style: solid;
   border-color: var(--color-border-light);
   border-radius: var(--radius-sm);
-  padding: 0.66667em;
+  padding: var(--scale-067);
   word-wrap: break-word;
 }
 
@@ -1194,7 +1220,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 
 @media only screen and (min-width: 1280px) {
   .literalblock > .content pre, .listingblock > .content pre {
-    font-size: 0.86667em;
+    font-size: var(--scale-087);
   }
 }
 
@@ -1207,8 +1233,8 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
   font-size: 0.9em;
   color: var(--color-icon-muted);
   position: absolute;
-  top: 0.4em;
-  right: 0.4em;
+  top: var(--scale-040);
+  right: var(--scale-040);
 }
 
 .listingblock:hover code.asciidoc:before {
@@ -1261,7 +1287,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p {
 
 .listingblock.terminal pre .command:before {
   content: attr(data-prompt);
-  padding-right: 0.5em;
+  padding-right: var(--scale-050);
   color: var(--color-icon-muted);
 }
 
@@ -1288,7 +1314,7 @@ table.pyhltable td.code {
 .highlight.pygments .lineno, table.pyhltable td:not(.code) {
   color: var(--color-icon-muted);
   padding-left: 0;
-  padding-right: .5em;
+  padding-right: var(--scale-050);
   border-right: 1px solid var(--color-border-light);
 }
 
@@ -1310,8 +1336,9 @@ table.pyhltable .linenodiv {
 
 .quoteblock blockquote {
   margin: 0 0 1em 0;
-  padding: 0 0 0.6em 0;
+  padding: 0 0 0.6em 1em;
   border: 0;
+  background: url('../html-theme/images/github/blockquote-arrow.png') 0 2px no-repeat;
 }
 
 .quoteblock blockquote > .paragraph:last-child p {
@@ -1321,7 +1348,7 @@ table.pyhltable .linenodiv {
 .quoteblock .attribution {
   margin-top: -.25em;
   padding-bottom: 0.6em;
-  font-size: 0.86667em;
+  font-size: var(--scale-087);
   color: var(--color-text-muted);
 }
 
@@ -1331,7 +1358,7 @@ table.pyhltable .linenodiv {
 
 .quoteblock .attribution cite {
   display: block;
-  margin-bottom: 0.66667em;
+  margin-bottom: var(--scale-067);
 }
 
 table thead th, table tfoot th {
@@ -1398,7 +1425,7 @@ ol {
 }
 
 ul li ol {
-  margin-left: 0.7em;
+  margin-left: var(--scale-070);
 }
 
 dl dd {
@@ -1410,7 +1437,7 @@ dl dd:last-child, dl dd:last-child > :last-child {
 }
 
 ol > li p, ul > li p, ul dd, ol dd, .olist .olist, .ulist .ulist, .ulist .olist, .olist .ulist {
-  margin-bottom: 0.5em;
+  margin-bottom: var(--scale-050);
 }
 
 ul.unstyled, ol.unnumbered, ul.checklist, ul.none {
@@ -1418,7 +1445,7 @@ ul.unstyled, ol.unnumbered, ul.checklist, ul.none {
 }
 
 ul.unstyled, ol.unnumbered, ul.checklist {
-  margin-left: 0.66667em;
+  margin-left: var(--scale-067);
 }
 
 ul.checklist li > p:first-child > i[class^="icon-check"]:first-child, ul.checklist li > p:first-child > input[type="checkbox"]:first-child {
@@ -1431,8 +1458,8 @@ ul.checklist li > p:first-child > input[type="checkbox"]:first-child {
 }
 
 ul.inline {
-  margin: 0 auto 0.5em auto;
-  margin-left: -1.46667em;
+  margin: 0 auto var(--scale-050) auto;
+  margin-left: calc(-1 * var(--scale-147));
   margin-right: 0;
   padding: 0;
   list-style: none;
@@ -1442,7 +1469,7 @@ ul.inline {
 ul.inline > li {
   list-style: none;
   float: left;
-  margin-left: 1.46667em;
+  margin-left: var(--scale-147);
   display: block;
 }
 
@@ -1502,7 +1529,7 @@ td.hdlist1, td.hdlist2 {
 }
 
 .literalblock + .colist, .listingblock + .colist {
-  margin-top: -0.5em;
+  margin-top: calc(-1 * var(--scale-050));
 }
 
 .colist > table tr > td:first-of-type {
@@ -1511,7 +1538,7 @@ td.hdlist1, td.hdlist2 {
 }
 
 .colist > table tr > td:last-of-type {
-  padding: 0.26667em 0;
+  padding: var(--scale-027) 0;
 }
 
 .qanda > ol > li > p > em:only-child {
@@ -1526,11 +1553,11 @@ td.hdlist1, td.hdlist2 {
 }
 
 .imageblock.left, .imageblock[style*="float: left"] {
-  margin: 0.26667em 0.66667em 1.33333em 0;
+  margin: var(--scale-027) var(--scale-067) var(--scale-133) 0;
 }
 
 .imageblock.right, .imageblock[style*="float: right"] {
-  margin: 0.26667em 0 1.33333em 0.66667em;
+  margin: var(--scale-027) 0 var(--scale-133) var(--scale-067);
 }
 
 .imageblock > .title {
@@ -1546,18 +1573,18 @@ td.hdlist1, td.hdlist2 {
 }
 
 .image.left, .image.right {
-  margin-top: 0.26667em;
-  margin-bottom: 0.26667em;
+  margin-top: var(--scale-027);
+  margin-bottom: var(--scale-027);
   display: inline-block;
   line-height: 0;
 }
 
 .image.left {
-  margin-right: 0.66667em;
+  margin-right: var(--scale-067);
 }
 
 .image.right {
-  margin-left: 0.66667em;
+  margin-left: var(--scale-067);
 }
 
 a.image {
@@ -1566,7 +1593,7 @@ a.image {
 
 span.footnote, span.footnoteref {
   vertical-align: super;
-  font-size: 0.93333em;
+  font-size: var(--scale-093);
 }
 
 span.footnote a, span.footnoteref a {
@@ -1576,7 +1603,7 @@ span.footnote a, span.footnoteref a {
 #footnotes {
   padding-top: 0.8em;
   padding-bottom: 0.8em;
-  margin-bottom: 0.66667em;
+  margin-bottom: var(--scale-067);
 }
 
 #footnotes hr {
@@ -1587,12 +1614,12 @@ span.footnote a, span.footnoteref a {
 }
 
 #footnotes .footnote {
-  padding: 0 0.4em;
+  padding: 0 var(--scale-040);
   line-height: 1.3;
-  font-size: 0.93333em;
-  margin-left: 1.2em;
-  text-indent: -1.2em;
-  margin-bottom: .2em;
+  font-size: var(--scale-093);
+  margin-left: var(--scale-120);
+  text-indent: calc(-1 * var(--scale-120));
+  margin-bottom: var(--scale-020);
 }
 
 #footnotes .footnote a:first-of-type {
@@ -1605,7 +1632,7 @@ span.footnote a, span.footnoteref a {
 }
 
 #content #footnotes {
-  margin-top: -0.66667em;
+  margin-top: calc(-1 * var(--scale-067));
   margin-bottom: 0;
   padding: 0.8em 0;
 }
@@ -1857,27 +1884,17 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] {
 
 /* ================================================================
    SECTION: ISAQB SITE OVERRIDES
-   Tail appended over the stock github/asciidoctor theme above.
-   Known unmerged duplicates in this section (see CSS-IMPROVEMENT-PLAN.md
-   step 4, not yet done): this p.lead redefines the one further up;
-   the h1/h2/h3 anchor color rule below redefines the one further up;
-   .quoteblock blockquote and .sidebarblock > .content > .title further
-   down each redefine an earlier rule too. Don't reorder any of these
-   four without merging them first — the cascade currently depends on
-   this block coming last.
+   Tail appended over the stock github/asciidoctor theme above. The
+   four rules that used to duplicate/conflict with earlier definitions
+   in this file (p.lead, the h1-h6 anchor color, .quoteblock blockquote,
+   .sidebarblock > .content > .title — see CSS-IMPROVEMENT-PLAN.md,
+   step 4) have been merged into their upstream rule and removed from
+   here. What's left below are genuinely isaqb-specific additions with
+   no earlier counterpart.
    ================================================================ */
-p.lead, .paragraph.lead > p, #preamble > .sectionbody > .paragraph:first-of-type p {
-  font-size: 1em;
-  color: var(--color-text-muted);
-}
-
 h2 {
   color: var(--color-heading-navy);
   border-bottom: 1px solid var(--color-border-light);
-}
-
-#content h1 > a.anchor, h2 > a.anchor, h3 > a.anchor, #toctitle > a.anchor, .sidebarblock > .content > .title > a.anchor, h4 > a.anchor, h5 > a.anchor, h6 > a.anchor {
-  color: var(--color-brand-orange);
 }
 
 #header, #content, #footnotes {
@@ -1891,8 +1908,8 @@ h2 {
 }
 
 #content ul li {
-  background: url('../html-theme/images/isaqb/li-chevron.png') 0 0.4em no-repeat;
-  padding-left: .7em;
+  background: url('../html-theme/images/isaqb/li-chevron.png') 0 var(--scale-040) no-repeat;
+  padding-left: var(--scale-070);
 }
 
 .olist.procedure > ol {
@@ -1917,22 +1934,10 @@ h2 {
   width: 30px;
   padding: 0 10px 0 0;
   color: var(--color-icon-muted);
-  font-size: 1.46667em;
+  font-size: var(--scale-147);
   font-weight: bold;
   line-height: 1.6;
   text-align: right;
   border-right: 1px solid #ddd;
-}
-
-.quoteblock blockquote {
-  background: url('../html-theme/images/github/blockquote-arrow.png') 0 2px no-repeat;
-  padding-left: 1em;
-}
-
-.sidebarblock > .content > .title {
-  margin: -20px -20px 20px;
-  padding: 1em;
-  font-size: 0.8em;
-  background: var(--color-shadow-soft);
 }
 
