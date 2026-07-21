@@ -72,12 +72,6 @@ body {
 
 /* ========================================================================== Typography ========================================================================== */
 
-/** Address variable `h1` font-size and margin within `section` and `article` contexts in Firefox 4+, Safari 5, and Chrome. */
-h1 {
-  font-size: 2em;
-  margin: 0.67em 0;
-}
-
 /** Address styling not present in IE 8/9, Safari 5, and Chrome. */
 abbr[title] {
   border-bottom: 1px dotted;
@@ -859,6 +853,12 @@ kbd kbd:last-child {
   border-bottom: 1px solid var(--color-border-light);
   margin-bottom: -28px;
   padding-bottom: 32px;
+  font-size: var(--text-lg);
+}
+
+#header > h1 strong,
+#header > h1 em {
+  font-size: var(--text-3xl);
 }
 
 #header span {
