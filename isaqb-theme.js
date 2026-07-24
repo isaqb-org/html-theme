@@ -69,6 +69,33 @@
     return prefersDark && prefersDark.matches ? "dark" : "light";
   }
 
+  /**
+   * Themed images.
+   *
+   * An image opted in with the `theme-swap` role/class loads a "-dark" filename
+   * variant in dark mode and the original in light mode:
+   *
+   *   images/logo.svg  <->  images/logo-dark.svg
+   */
+  const THEMED_IMAGE_SELECTOR = ".theme-swap img, img.theme-swap";
+
+  function darkVariant(src) {
+    return src.replace(/(\.[^./?#]+)([?#].*)?$/, "-dark$1$2");
+  }
+
+  function applyThemeToImages(theme) {
+    for (const image of document.querySelectorAll(THEMED_IMAGE_SELECTOR)) {
+      image.dataset.lightSrc ??= image.getAttribute("src");
+      const nextSrc =
+        theme === "dark"
+          ? darkVariant(image.dataset.lightSrc)
+          : image.dataset.lightSrc;
+      if (image.getAttribute("src") !== nextSrc) {
+        image.setAttribute("src", nextSrc);
+      }
+    }
+  }
+
   const de = (navigator.language || "en").toLowerCase().indexOf("de") === 0;
   const labels = de
     ? {
@@ -82,11 +109,13 @@
   btn.type = "button";
 
   function render() {
-    const dark = effectiveTheme() === "dark";
+    const theme = effectiveTheme();
+    const dark = theme === "dark";
     btn.textContent = dark ? "☀" : "☾";
     const label = dark ? labels.toLight : labels.toDark;
     btn.setAttribute("aria-label", label);
     btn.setAttribute("title", label);
+    applyThemeToImages(theme);
   }
 
   btn.addEventListener("click", () => {
@@ -101,5 +130,6 @@
   });
 
   render();
+  prefersDark?.addEventListener("change", render);
   document.body.appendChild(btn);
 })();
